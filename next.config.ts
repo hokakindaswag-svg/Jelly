@@ -15,6 +15,8 @@ const nextConfig: NextConfig = {
   // GitHub Pages sert /route/ -> /route/index.html : il faut donc un dossier par route.
   trailingSlash: true,
   basePath,
+  // L'export statique n'embarque pas d'optimiseur d'images à l'exécution.
+  images: { unoptimized: true },
 };
 
 export default nextConfig;

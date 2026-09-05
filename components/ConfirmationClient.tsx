@@ -8,7 +8,7 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import Plushie from "./Plushie";
+import ProductVisual from "./ProductVisual";
 import { formatPrice, getProduct, mysteryProduct } from "@/lib/products";
 import { shippingFor } from "@/lib/checkout";
 import { site } from "@/lib/site";
@@ -26,7 +26,7 @@ export default function ConfirmationClient() {
     <>
       {product && (
         <div className="mx-auto h-36 w-36 animate-float">
-          <Plushie art={product.art} palette={product.palette} label={product.name} className="h-full w-full" />
+          <ProductVisual product={product} sizes="120px" className="h-full w-full" />
         </div>
       )}
 
