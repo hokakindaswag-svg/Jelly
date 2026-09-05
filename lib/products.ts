@@ -470,6 +470,52 @@ export const products: Product[] = [
       "Édition Halloween limitée",
     ],
   },
+  {
+    handle: "momo-la-momie",
+    name: "Momo la Momie",
+    tagline: "Emmailloté de bandelettes, jamais de mauvaise humeur.",
+    description:
+      "Momo s'est réveillé un peu enroulé mais très câlin. Ses bandelettes en tissu tout doux ne cachent qu'une chose : deux yeux tout ronds et un sourire timide.",
+    price: DOUDOU_PRICE,
+    variantId: "doudou-momo-la-momie",
+    art: "bear",
+    palette: { body: "#fffaf0", accent: "#e8dcc8", blush: "#ffa8c8" },
+    image: "/produits/mummy.webp",
+    badges: ["halloween", "new"],
+    collections: ["halloween", "spooky"],
+    rating: 4.9,
+    reviewCount: 24,
+    stock: 33,
+    size: "18 cm",
+    details: [
+      "Bandelettes cousues, non amovibles",
+      "Aussi doux qu'un doudou classique",
+      "Édition Halloween limitée",
+    ],
+  },
+  {
+    handle: "faucho-le-petit-faucheur",
+    name: "Faucho le Petit Faucheur",
+    tagline: "Il vient chercher... des câlins, rien de plus.",
+    description:
+      "Faucho porte une cape à capuche et une petite faux en velours, mais c'est le doudou le moins effrayant du cimetière. Son fantôme brodé sur l'épaule lui tient compagnie.",
+    price: DOUDOU_PRICE,
+    variantId: "doudou-faucho-le-petit-faucheur",
+    art: "bear",
+    palette: { body: "#fff3e6", accent: "#5c6470", blush: "#ffa8c8" },
+    image: "/produits/grim-reaper.webp",
+    badges: ["halloween", "new", "limited"],
+    collections: ["halloween", "spooky", "editions-limitees"],
+    rating: 4.8,
+    reviewCount: 19,
+    stock: 21,
+    size: "17 cm",
+    details: [
+      "Cape à capuche amovible",
+      "Petite faux en velours (inoffensive)",
+      "Édition Halloween — jusqu'à épuisement",
+    ],
+  },
 ];
 
 /* -------------------------------------------------------------------------- */
