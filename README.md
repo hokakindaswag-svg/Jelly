@@ -16,7 +16,8 @@ crème et violet pastel. Jamais sombre, jamais gore.
 ```bash
 npm install
 npm run dev     # http://localhost:3000
-npm run build   # build de production
+npm run build   # export statique dans out/
+npx serve out   # prévisualiser l'export
 ```
 
 Stack : Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4.
@@ -74,6 +75,23 @@ lib/
   site.ts       Navigation, collections, réassurance, avis, FAQ
   checkout.ts   Construction des URLs de checkout + frais de port
 ```
+
+---
+
+## Déploiement
+
+Le site est exporté en HTML statique (`output: "export"`) et publié sur GitHub
+Pages à chaque push sur `main`, via `.github/workflows/deploy.yml`.
+
+URL : **https://hokakindaswag-svg.github.io/Jelly/**
+
+Le site vit dans un sous-dossier, donc le build CI passe
+`NEXT_PUBLIC_BASE_PATH=/Jelly` pour préfixer liens et assets. En local la
+variable est vide et le site est servi à la racine.
+
+Comme l'export est statique, les paramètres d'URL du checkout
+(`?p=…&q=…&m=1`) sont lus côté navigateur : voir `CheckoutClient`,
+`ConfirmationClient` et `SearchClient`.
 
 ---
 
