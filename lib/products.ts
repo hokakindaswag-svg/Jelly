@@ -70,7 +70,7 @@ export type Product = {
 /*  Doudous — 9,99 €                                                          */
 /* -------------------------------------------------------------------------- */
 
-export const products: Product[] = [
+const catalog: Product[] = [
   {
     handle: "mimi-le-fantome",
     name: "Mimi le Fantôme",
@@ -103,6 +103,7 @@ export const products: Product[] = [
     price: DOUDOU_PRICE,
     variantId: "doudou-pompom-la-citrouille",
     art: "pumpkin",
+    image: "/produits/pumpkin.webp",
     palette: { body: "#ff9d4d", accent: "#6f4c38", blush: "#ff7fae" },
     badges: ["halloween", "bestseller"],
     collections: ["halloween", "cute"],
@@ -125,6 +126,7 @@ export const products: Product[] = [
     price: DOUDOU_PRICE,
     variantId: "doudou-batou-la-chauve-souris",
     art: "bat",
+    image: "/produits/bat.webp",
     palette: { body: "#b191ff", accent: "#9670f2", blush: "#ff7fae" },
     badges: ["halloween", "limited"],
     collections: ["halloween", "spooky", "editions-limitees"],
@@ -192,6 +194,7 @@ export const products: Product[] = [
     price: DOUDOU_PRICE,
     variantId: "doudou-arachou-la-petite-araignee",
     art: "spider",
+    image: "/produits/spider.webp",
     palette: { body: "#9670f2", accent: "#33211a", blush: "#ffa8c8" },
     badges: ["halloween"],
     collections: ["halloween", "spooky"],
@@ -516,6 +519,52 @@ export const products: Product[] = [
       "Édition Halloween — jusqu'à épuisement",
     ],
   },
+  {
+    handle: "jacko-le-chasseur-de-bonbons",
+    name: "Jacko le Chasseur de Bonbons",
+    tagline: "Prêt pour sa tournée du 31 octobre.",
+    description:
+      "Jacko a mis son pull citrouille, son chapeau pointu et sa petite lanterne autour du cou. Il est équipé, motivé, et il compte bien remplir son seau.",
+    price: DOUDOU_PRICE,
+    variantId: "doudou-jacko-le-chasseur-de-bonbons",
+    art: "pumpkin",
+    palette: { body: "#ffdcb0", accent: "#e2621b", blush: "#ffa8c8" },
+    image: "/produits/jacko.webp",
+    badges: ["halloween", "new", "limited"],
+    collections: ["halloween", "editions-limitees", "cute"],
+    rating: 4.9,
+    reviewCount: 31,
+    stock: 26,
+    size: "20 cm",
+    details: [
+      "Pull citrouille tricoté et chapeau amovibles",
+      "Mini lanterne citrouille en pendentif",
+      "Édition Halloween limitée",
+    ],
+  },
+  {
+    handle: "skelly-la-chauve-souris",
+    name: "Skelly la Chauve-Souris",
+    tagline: "Un squelette, mais en rose et avec un nœud.",
+    description:
+      "Skelly porte une combinaison de chauve-souris avec un squelette brodé rose bonbon. Le seul squelette au monde qu'on a envie de serrer dans ses bras.",
+    price: DOUDOU_PRICE,
+    variantId: "doudou-skelly-la-chauve-souris",
+    art: "bat",
+    palette: { body: "#5c5560", accent: "#ffa8c8", blush: "#f95d97" },
+    image: "/produits/bat-skeleton.webp",
+    badges: ["halloween", "new", "limited"],
+    collections: ["halloween", "spooky", "editions-limitees"],
+    rating: 5,
+    reviewCount: 27,
+    stock: 18,
+    size: "18 cm",
+    details: [
+      "Combinaison à capuche avec ailes",
+      "Squelette brodé rose et petit nœud",
+      "Édition Halloween — jusqu'à épuisement",
+    ],
+  },
 ];
 
 /* -------------------------------------------------------------------------- */
@@ -549,6 +598,16 @@ export const mysteryProduct: Product = {
 /* -------------------------------------------------------------------------- */
 /*  Helpers                                                                    */
 /* -------------------------------------------------------------------------- */
+
+/**
+ * Ordre d'affichage du catalogue : les doudous photographiés passent devant.
+ * Une vraie photo convertit mieux qu'une illustration, donc elle mérite le
+ * haut des grilles ; le reste garde son ordre d'origine.
+ */
+export const products: Product[] = [
+  ...catalog.filter((p) => p.image),
+  ...catalog.filter((p) => !p.image),
+];
 
 export const allProducts: Product[] = [...products, mysteryProduct];
 
