@@ -2,12 +2,12 @@
 
 /**
  * Galerie produit : plusieurs mises en scène du même doudou (fond, cadrage,
- * décor saisonnier). Quand les vraies photos arriveront, il suffira de
- * remplacer le rendu de <Plushie> par une <Image> par vue.
+ * décor saisonnier). <ProductVisual> affiche la vraie photo quand le produit
+ * en a une, et l'illustration SVG sinon.
  */
 
 import { useState } from "react";
-import Plushie from "./Plushie";
+import ProductVisual from "./ProductVisual";
 import type { Product } from "@/lib/products";
 
 const VIEWS = [
@@ -40,10 +40,10 @@ export default function ProductGallery({ product }: { product: Product }) {
             {emoji}
           </span>
         ))}
-        <Plushie
-          art={product.art}
-          palette={product.palette}
-          label={product.name}
+        <ProductVisual
+          product={product}
+          priority
+          sizes="(max-width: 1024px) 92vw, 520px"
           className={`h-full w-full p-8 transition-transform duration-500 ${view.zoom}`}
         />
       </div>
@@ -60,7 +60,7 @@ export default function ProductGallery({ product }: { product: Product }) {
               i === index ? "ring-2 ring-bubble-400" : "opacity-70 hover:opacity-100"
             }`}
           >
-            <Plushie art={product.art} palette={product.palette} className="h-full w-full p-2" />
+            <ProductVisual product={product} label={null} sizes="80px" className="h-full w-full p-2" />
           </button>
         ))}
       </div>

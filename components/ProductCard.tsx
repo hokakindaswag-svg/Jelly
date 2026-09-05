@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Plushie from "./Plushie";
+import ProductVisual from "./ProductVisual";
 import Badge from "./ui/Badge";
 import PriceTag from "./ui/PriceTag";
 import Stars from "./ui/Stars";
@@ -24,10 +24,10 @@ export default function ProductCard({
     <article className="group flex flex-col overflow-hidden rounded-[var(--radius-cute)] bg-white shadow-[0_2px_14px_-8px_rgba(111,76,56,0.35)] ring-1 ring-cocoa-800/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-cute">
       <Link href={href} className="relative block" prefetch={priority}>
         <div className="relative aspect-square overflow-hidden bg-gradient-to-b from-peach-50 to-bubble-50">
-          <Plushie
-            art={product.art}
-            palette={product.palette}
-            label={product.name}
+          <ProductVisual
+            product={product}
+            priority={priority}
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 280px"
             className="h-full w-full p-5 transition-transform duration-500 group-hover:scale-[1.07] group-hover:rotate-2"
           />
           <div className="absolute left-2.5 top-2.5 flex flex-col items-start gap-1.5">

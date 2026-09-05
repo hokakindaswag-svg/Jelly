@@ -22,7 +22,7 @@
 
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
-import Plushie from "./Plushie";
+import ProductVisual from "./ProductVisual";
 import { formatPrice, mysteryProduct, type Product } from "@/lib/products";
 import { shippingFor, FREE_SHIPPING_THRESHOLD } from "@/lib/checkout";
 
@@ -218,7 +218,7 @@ export default function CheckoutFlow({ product, quantity, withMystery }: Props) 
 
           <div className="mt-4 flex items-center gap-3">
             <div className="h-16 w-16 shrink-0 rounded-2xl bg-gradient-to-br from-peach-50 to-bubble-50 p-1.5">
-              <Plushie art={product.art} palette={product.palette} className="h-full w-full" />
+              <ProductVisual product={product} label={null} sizes="80px" className="h-full w-full" />
             </div>
             <div className="min-w-0 flex-1">
               <p className="truncate text-sm font-extrabold text-cocoa-800">{product.name}</p>

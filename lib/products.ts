@@ -51,6 +51,11 @@ export type Product = {
   variantId: string;
   art: PlushieArt;
   palette: { body: string; accent: string; blush: string };
+  /**
+   * Vraie photo produit, servie depuis `public/produits/`.
+   * Quand elle est absente, l'illustration SVG <Plushie> prend le relais.
+   */
+  image?: string;
   badges: Badge[];
   collections: CollectionHandle[];
   rating: number;
@@ -478,6 +483,7 @@ export const mysteryProduct: Product = {
   variantId: "doudou-mystere-halloween",
   art: "ghost",
   palette: { body: "#e3d6ff", accent: "#b191ff", blush: "#ff7fae" },
+  image: "/produits/doudou-mystere.webp",
   badges: ["halloween", "limited"],
   collections: ["halloween", "editions-limitees"],
   rating: 4.8,
