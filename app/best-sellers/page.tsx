@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ProductGrid from "@/components/ProductGrid";
+import Reviews from "@/components/Reviews";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { getBadged, products } from "@/lib/products";
 
@@ -22,7 +23,7 @@ export default function BestSellersPage() {
           <SectionHeading
             eyebrow="Les chouchous"
             title={<>💕 Nos coups de cœur</>}
-            subtitle="Ceux qui partent le plus vite. Rien d'étonnant à 9,99 €."
+            subtitle="La sélection Doudoumimi, à 9,99 € comme le reste."
           />
         </div>
       </section>
@@ -49,6 +50,7 @@ export default function BestSellersPage() {
         </div>
       </section>
 
+      <Reviews />
     </>
   );
 }
