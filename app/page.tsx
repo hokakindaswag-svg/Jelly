@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import PriceSection from "@/components/PriceSection";
 import ProductGrid from "@/components/ProductGrid";
 import MysteryBox from "@/components/MysteryBox";
+import Reviews from "@/components/Reviews";
 import CollectionCard from "@/components/CollectionCard";
 import TrustBadges from "@/components/TrustBadges";
 import UrgencyStrip from "@/components/UrgencyStrip";
@@ -93,6 +94,7 @@ export default function HomePage() {
       {/* ----------------------------- Doudou Mystère --------------------------- */}
       <MysteryBox />
 
+      <Reviews />
       <UrgencyStrip />
       <TrustBadges />
 

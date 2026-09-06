@@ -123,6 +123,73 @@ export const trustBadges = [
   },
 ];
 
+export type Review = {
+  name: string;
+  handle: string;
+  rating: number;
+  title: string;
+  text: string;
+  product: string;
+  emoji: string;
+};
+
+export const reviews: Review[] = [
+  {
+    name: "Léa",
+    handle: "@leaaa.png",
+    rating: 5,
+    title: "J'en ai pris 3 d'un coup",
+    text: "À 9,99 € j'ai pas réfléchi. Mimi le Fantôme est encore plus doux qu'en photo, il dort avec moi depuis.",
+    product: "Mimi le Fantôme",
+    emoji: "👻",
+  },
+  {
+    name: "Camille",
+    handle: "@cam.miille",
+    rating: 5,
+    title: "Le Doudou Mystère c'est trop bien",
+    text: "J'ai tenté à 2 € pour rigoler et j'ai reçu Sorcia. Franchement je l'aurais jamais choisie et c'est ma préférée.",
+    product: "Doudou Mystère",
+    emoji: "🎃",
+  },
+  {
+    name: "Inès",
+    handle: "@ines.rvr",
+    rating: 5,
+    title: "Cadeau parfait",
+    text: "Offert à ma petite sœur pour Halloween, elle a crié. Emballage trop mignon en plus.",
+    product: "Pompom la Citrouille",
+    emoji: "🧡",
+  },
+  {
+    name: "Manon",
+    handle: "@manonx3",
+    rating: 4,
+    title: "Trop mignon, arrivé vite",
+    text: "Batou est minuscule mais parfait sur mon sac. Je retire une étoile juste parce que je le voulais plus grand.",
+    product: "Batou la Chauve-Souris",
+    emoji: "🦇",
+  },
+  {
+    name: "Jade",
+    handle: "@jadeee.co",
+    rating: 5,
+    title: "Vue sur TikTok, achetée en 30 sec",
+    text: "Le site est trop simple, j'ai cliqué sur acheter et c'était réglé. Nuagette est ultra douce.",
+    product: "Nuagette",
+    emoji: "☁️",
+  },
+  {
+    name: "Sarah",
+    handle: "@sarahhh.b",
+    rating: 5,
+    title: "Attention c'est addictif",
+    text: "J'ai commencé par un doudou. J'en ai 5. Je ne compte pas m'arrêter là.",
+    product: "Guimauve le Lapin",
+    emoji: "🎀",
+  },
+];
+
 export const faq = [
   {
     q: "Pourquoi tous les doudous sont à 9,99 € ?",
