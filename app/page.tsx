@@ -1,15 +1,12 @@
 import Link from "next/link";
 import Hero from "@/components/Hero";
-import PriceSection from "@/components/PriceSection";
 import ProductGrid from "@/components/ProductGrid";
 import MysteryBox from "@/components/MysteryBox";
 import Reviews from "@/components/Reviews";
 import ShippingBanner from "@/components/ShippingBanner";
-import CollectionCard from "@/components/CollectionCard";
 import TrustBadges from "@/components/TrustBadges";
 import UrgencyStrip from "@/components/UrgencyStrip";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { collections } from "@/lib/site";
 import { featuredProducts, getByCollection, products } from "@/lib/products";
 
 export default function HomePage() {
@@ -20,7 +17,13 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <PriceSection />
+
+      {/* L'offre Mystère prend la place de l'ancien bloc « prix unique », qui
+          répétait juste sous le hero le chiffre que le hero venait d'annoncer.
+          La livraison offerte suit dans la foulée : les deux promesses qui
+          font cliquer sont ainsi visibles sans défiler bien loin. */}
+      <MysteryBox />
+      <ShippingBanner />
 
       {/* ------------------------------- Halloween ------------------------------ */}
       <section className="bg-cream-deep py-16 sm:py-24">
@@ -49,9 +52,6 @@ export default function HomePage() {
         </div>
       </section>
 
-
-      <ShippingBanner />
-
       {/* ---------------------------- Les plus mignons -------------------------- */}
       <section className="bg-cream py-14 sm:py-20">
         <div className="mx-auto max-w-7xl px-4">
@@ -73,25 +73,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* ------------------------------ Collections ----------------------------- */}
-      <section className="bg-cream py-16 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4">
-          <SectionHeading
-            eyebrow="Par univers"
-            title={<>Trouve ton style</>}
-            subtitle="Cinq univers, un seul prix."
-          />
-          <div className="mt-8 grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
-            {collections.map((c) => (
-              <CollectionCard key={c.handle} collection={c} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ----------------------------- Doudou Mystère --------------------------- */}
-      <MysteryBox />
 
       <Reviews />
       <UrgencyStrip />
