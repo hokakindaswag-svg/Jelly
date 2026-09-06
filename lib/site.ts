@@ -12,7 +12,7 @@ import type { CollectionHandle, PlushieArt } from "./products";
 export const site = {
   name: "Doudoumimi",
   tagline: "Des doudous beaucoup trop mignons à adopter.",
-  baseline: "Tous les doudous : 9,99 € 🎀",
+  baseline: "Des doudous beaucoup trop mignons.",
   description:
     "Boutique française de doudous et peluches trop mignons. Tous les doudous à 9,99 € et le Doudou Mystère Halloween à 2 €.",
   email: "coucou@doudoumimi.fr",
@@ -31,7 +31,6 @@ export const mainNav = [
 
 export const announcements = [
   "🎃 Édition Halloween limitée — jusqu'à épuisement des stocks",
-  "🧸 Tous les doudous : 9,99 €",
   "👻 Doudou Mystère : 2 € seulement",
   "💌 Expédition depuis l'Europe",
   "🚚 Livraison offerte sur toute la boutique",
@@ -201,7 +200,7 @@ export const faq = [
   },
   {
     q: "Je peux choisir mon Doudou Mystère ?",
-    a: "Non, sinon ce ne serait plus un mystère 👻 Si tu veux un modèle précis, prends-le directement à 9,99 €.",
+    a: "Non, sinon ce ne serait plus un mystère 👻 Si tu veux un modèle précis, prends-le directement dans la boutique.",
   },
   {
     q: "Je peux commander plusieurs doudous ?",

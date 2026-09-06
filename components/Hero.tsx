@@ -109,7 +109,7 @@ export default function Hero() {
                 imageClassName="drop-shadow-[0_22px_30px_rgba(111,76,56,0.26)]"
               />
               <span className="mt-1 block truncate rounded-full bg-white/85 px-2 py-1 text-center text-[10px] font-extrabold text-cocoa-800 opacity-0 shadow-sm backdrop-blur transition group-hover:opacity-100 sm:text-xs">
-                {p.name} · 9,99 €
+                {p.name}
               </span>
             </Link>
           ))}

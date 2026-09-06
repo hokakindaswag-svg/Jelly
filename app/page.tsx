@@ -101,7 +101,7 @@ export default function HomePage() {
             Tu mérites un nouveau doudou.
           </h2>
           <p className="mt-3 text-base text-cocoa-800/80 sm:text-lg">
-            9,99 € et il est à toi, livraison offerte. Ou 2 € si tu préfères tenter le mystère.
+            Livraison offerte. Ou tente le Doudou Mystère si tu préfères la surprise.
           </p>
           <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
             <Link

@@ -60,7 +60,7 @@ export default function AccountPage() {
             href="/doudous"
             className="mt-3 inline-flex rounded-full bg-pumpkin-500 px-6 py-3 font-[family-name:var(--font-display)] text-sm font-extrabold uppercase tracking-wide text-white shadow-cute"
           >
-            Voir les doudous — 9,99 €
+            Voir les doudous
           </Link>
         </div>
       </div>

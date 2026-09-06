@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { handle } = await params;
   const collection = collections.find((c) => c.handle === handle);
   if (!collection) return { title: "Collection introuvable" };
-  return { title: `${collection.title} — 9,99 €`, description: collection.blurb };
+  return { title: collection.title, description: collection.blurb };
 }
 
 export default async function CollectionPage({ params }: Params) {
@@ -48,7 +48,7 @@ export default async function CollectionPage({ params }: Params) {
             subtitle={collection.blurb}
           />
           <p className="mx-auto mt-4 w-fit rounded-full bg-white/90 px-5 py-2.5 font-[family-name:var(--font-display)] text-lg font-extrabold text-pumpkin-600 shadow-sm">
-            Tous à 9,99 € 🎀
+            Livraison offerte 🎀
           </p>
         </div>
       </section>

@@ -5,7 +5,7 @@ import { faq, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "FAQ",
-  description: "Toutes les réponses sur les doudous Doudoumimi, le prix unique de 9,99 € et le Doudou Mystère à 2 €.",
+  description: "Toutes les réponses sur les doudous Doudoumimi, la livraison et le Doudou Mystère.",
 };
 
 export default function FaqPage() {

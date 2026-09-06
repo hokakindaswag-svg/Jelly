@@ -169,7 +169,7 @@ export default function Header() {
             </Link>
 
             <p className="mt-auto pt-6 text-center text-sm font-bold text-cocoa-600/70">
-              Tous les doudous : 9,99 € 🎀
+              Livraison offerte 🎀
             </p>
           </nav>
         </div>
