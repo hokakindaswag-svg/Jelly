@@ -64,9 +64,7 @@ export default function MysteryBox() {
             <AddToCartButton handle={mysteryProduct.handle} variant="mystery" size="lg">
               Je tente ma chance 🎃
             </AddToCartButton>
-            <span className="text-sm font-semibold text-cocoa-800/70">
-              Livraison offerte 🚚
-            </span>
+
           </div>
         </div>
       </div>
