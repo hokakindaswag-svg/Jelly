@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function DoudousPage() {
   return (
     <>
-      <section className="bg-gradient-to-b from-bubble-100 to-cream py-10 sm:py-14">
+      <section className="bg-cream py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4">
           <SectionHeading
             eyebrow={`${products.length} doudous disponibles`}

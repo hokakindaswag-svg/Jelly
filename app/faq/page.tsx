@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function FaqPage() {
   return (
     <>
-      <section className="bg-gradient-to-b from-lilac-100 to-cream py-10 sm:py-14">
+      <section className="bg-cream py-12 sm:py-16">
         <div className="mx-auto max-w-3xl px-4">
           <SectionHeading
             eyebrow="On répond à tout"

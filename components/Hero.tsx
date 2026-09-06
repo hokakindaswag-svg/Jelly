@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import ProductVisual from "./ProductVisual";
-import { Bat, Ghost, Pumpkin, SpiderWeb, Star } from "./ui/HalloweenDecor";
+import { Ghost, SpiderWeb } from "./ui/HalloweenDecor";
 import { assetUrl } from "@/lib/assets";
 import { featuredProducts, getProduct } from "@/lib/products";
 
@@ -36,53 +36,39 @@ export default function Hero() {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center opacity-25 mix-blend-multiply"
+          className="object-cover object-center opacity-[0.13]"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-cream/70 via-cream/40 to-cream" />
+        <div className="absolute inset-0 bg-gradient-to-b from-cream/60 via-cream/30 to-cream" />
       </div>
 
-      {/* Halos colorés : redonnent de la profondeur par-dessus la photo */}
-      <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
-        <div className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-pumpkin-300/25 blur-3xl" />
-        <div className="absolute right-0 top-1/3 h-80 w-80 rounded-full bg-bubble-200/30 blur-3xl" />
-        <div className="absolute bottom-0 left-1/3 h-64 w-64 rounded-full bg-lilac-200/30 blur-3xl" />
-      </div>
-
-      {/* Décor Halloween cute */}
+      {/* Deux repères Halloween, pas plus : sur fond blanc, la moindre
+          toile d'araignée se voit, il en faut donc beaucoup moins. */}
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
-        <SpiderWeb className="left-0 top-0 h-28 w-28 text-cocoa-600/25 sm:h-40 sm:w-40" />
-        <SpiderWeb corner="right" className="right-0 top-0 h-24 w-24 text-cocoa-600/20 sm:h-32 sm:w-32" />
-        <Bat className="left-[14%] top-[10%] h-6 w-10 animate-float text-lilac-400/55 sm:h-8 sm:w-14" />
-        <Bat className="right-[20%] top-[16%] h-5 w-8 animate-wiggle text-lilac-400/40" />
-        <Ghost className="right-[6%] top-[42%] h-12 w-10 animate-float opacity-60 sm:h-16 sm:w-14" />
-        <Pumpkin className="bottom-[10%] left-[4%] h-10 w-10 animate-wiggle opacity-70 sm:h-14 sm:w-14" />
-        <Star className="left-[46%] top-[8%] h-5 w-5 animate-wiggle text-pumpkin-300/70" />
-        <Star className="right-[38%] bottom-[22%] h-4 w-4 animate-float text-bubble-300/70" />
-        <span className="absolute right-[14%] bottom-[6%] animate-float text-3xl opacity-40">🍂</span>
-        <span className="absolute left-[9%] top-[34%] animate-wiggle text-2xl opacity-35">🍁</span>
+        <SpiderWeb className="left-0 top-0 h-24 w-24 text-cocoa-600/15 sm:h-32 sm:w-32" />
+        <Ghost className="right-[7%] top-[26%] hidden h-12 w-10 animate-float opacity-40 sm:block" />
       </div>
 
       {/* minmax(0,…) : sans ça les pistes se dimensionnent sur le contenu
           (libellés en nowrap) et débordent de l'écran sur mobile. */}
       <div className="mx-auto grid min-h-[86svh] max-w-7xl grid-cols-[minmax(0,1fr)] items-center gap-6 px-4 py-10 sm:py-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-4 lg:py-16">
         <div className="min-w-0 text-center lg:text-left">
-          <span className="inline-flex items-center gap-2 rounded-full bg-white/85 px-4 py-2 text-[11px] font-extrabold uppercase tracking-widest text-pumpkin-600 shadow-sm backdrop-blur sm:text-xs">
+          <span className="inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.2em] text-pumpkin-600 sm:text-xs">
             🎃 Spooky season · édition limitée
           </span>
 
           <h1 className="mt-4 font-[family-name:var(--font-display)] text-[2.7rem] font-extrabold leading-[1.02] text-cocoa-800 sm:text-6xl lg:text-7xl">
             Des doudous
-            <span className="block text-bubble-500">trop mignons 👻</span>
+            <span className="block text-bubble-500">trop mignons</span>
           </h1>
 
           <p className="mx-auto mt-4 max-w-md text-base text-cocoa-800/85 sm:text-lg lg:mx-0">
             Une collection Halloween à croquer, à adopter avant qu&apos;elle ne disparaisse.
           </p>
 
-          <p className="mt-5 inline-flex items-center gap-2 rounded-full bg-cocoa-800 px-6 py-3 font-[family-name:var(--font-display)] text-lg font-extrabold text-white shadow-cute sm:text-xl">
-            🧸 Tous les doudous : 9,99 €
+          <p className="mt-6 font-[family-name:var(--font-display)] text-2xl font-extrabold text-cocoa-800 sm:text-3xl">
+            Tous les doudous : <span className="text-pumpkin-600">9,99 €</span>
           </p>
-          <p className="mt-2 text-sm font-extrabold text-bubble-500">🚚 Livraison offerte</p>
+          <p className="mt-1 text-sm font-bold text-cocoa-600/70">Livraison offerte</p>
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
             <Link
@@ -93,9 +79,9 @@ export default function Hero() {
             </Link>
             <Link
               href="/collections/halloween"
-              className="inline-flex items-center justify-center rounded-full bg-white px-6 py-4 sm:whitespace-nowrap sm:px-8 font-[family-name:var(--font-display)] text-base font-extrabold uppercase tracking-wide text-cocoa-800 shadow-sm ring-2 ring-cocoa-800/10 transition-transform hover:-translate-y-0.5 hover:ring-bubble-300 active:scale-95"
+              className="inline-flex items-center justify-center rounded-full px-6 py-4 sm:whitespace-nowrap sm:px-8 font-[family-name:var(--font-display)] text-base font-extrabold uppercase tracking-wide text-cocoa-800 ring-1 ring-cocoa-800/15 transition hover:bg-cocoa-800/5"
             >
-              🎃 Collection Halloween
+              Collection Halloween
             </Link>
           </div>
         </div>

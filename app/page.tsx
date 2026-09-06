@@ -8,7 +8,6 @@ import CollectionCard from "@/components/CollectionCard";
 import TrustBadges from "@/components/TrustBadges";
 import UrgencyStrip from "@/components/UrgencyStrip";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { Garland, SectionDecor } from "@/components/ui/HalloweenDecor";
 import { collections } from "@/lib/site";
 import { featuredProducts, getByCollection, products } from "@/lib/products";
 
@@ -23,15 +22,14 @@ export default function HomePage() {
       <PriceSection />
 
       {/* ------------------------------- Halloween ------------------------------ */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-peach-50 to-cream py-14 sm:py-20">
-        <SectionDecor tone="strong" />
-        <div className="relative mx-auto max-w-7xl px-4">
+      <section className="bg-cream-deep py-16 sm:py-24">
+        <div className="mx-auto max-w-7xl px-4">
           <SectionHeading
             eyebrow="Édition limitée"
-            title={<>🎃 Halloween Limited Edition</>}
+            title={<>Collection Halloween</>}
             subtitle="Des doudous spooky, mais surtout beaucoup trop mignons."
           />
-          <p className="mx-auto mt-3 max-w-xl rounded-full bg-white px-5 py-2.5 text-center text-sm font-extrabold text-pumpkin-600 shadow-sm">
+          <p className="mx-auto mt-3 max-w-xl text-center text-sm font-bold text-cocoa-600/70">
             Série produite une seule fois — une fois épuisée, elle disparaît.
           </p>
 
@@ -50,14 +48,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      <Garland className="bg-cream" />
 
       {/* ---------------------------- Les plus mignons -------------------------- */}
       <section className="bg-cream py-14 sm:py-20">
         <div className="mx-auto max-w-7xl px-4">
           <SectionHeading
             eyebrow="Les chouchous"
-            title={<>💕 Les plus mignons</>}
+            title={<>Les plus mignons</>}
             subtitle="Le classique, la lapine, les petits dragons — nos préférés."
           />
           <div className="mt-8">
@@ -75,12 +72,11 @@ export default function HomePage() {
       </section>
 
       {/* ------------------------------ Collections ----------------------------- */}
-      <section className="relative overflow-hidden bg-cream-deep py-14 sm:py-20">
-        <SectionDecor />
-        <div className="relative mx-auto max-w-7xl px-4">
+      <section className="bg-cream py-16 sm:py-24">
+        <div className="mx-auto max-w-7xl px-4">
           <SectionHeading
             eyebrow="Par univers"
-            title={<>✨ Trouve ton style de doudou</>}
+            title={<>Trouve ton style</>}
             subtitle="Cinq univers, un seul prix."
           />
           <div className="mt-8 grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
@@ -99,11 +95,10 @@ export default function HomePage() {
       <TrustBadges />
 
       {/* -------------------------------- Rappel CTA ---------------------------- */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-bubble-200 via-peach-100 to-lilac-100 py-16">
-        <SectionDecor tone="strong" />
-        <div className="relative mx-auto max-w-3xl px-4 text-center">
+      <section className="bg-cream-deep py-16 sm:py-20">
+        <div className="mx-auto max-w-3xl px-4 text-center">
           <h2 className="font-[family-name:var(--font-display)] text-3xl font-extrabold text-cocoa-800 sm:text-4xl">
-            Tu mérites un nouveau doudou. 🧸
+            Tu mérites un nouveau doudou.
           </h2>
           <p className="mt-3 text-base text-cocoa-800/80 sm:text-lg">
             9,99 € et il est à toi, livraison offerte. Ou 2 € si tu préfères tenter le mystère.
@@ -113,13 +108,13 @@ export default function HomePage() {
               href="/doudous"
               className="rounded-full bg-pumpkin-500 px-8 py-4 font-[family-name:var(--font-display)] text-base font-extrabold uppercase tracking-wide text-white shadow-cute transition-transform hover:-translate-y-0.5 active:scale-95"
             >
-              J&apos;adopte 🧸
+              J&apos;adopte
             </Link>
             <Link
               href="/doudou-mystere"
               className="rounded-full bg-lilac-400 px-8 py-4 font-[family-name:var(--font-display)] text-base font-extrabold uppercase tracking-wide text-white shadow-pop transition-transform hover:-translate-y-0.5 active:scale-95"
             >
-              Je tente ma chance 👻
+              Je tente ma chance
             </Link>
           </div>
         </div>

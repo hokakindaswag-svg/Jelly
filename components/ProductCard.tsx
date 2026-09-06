@@ -21,15 +21,14 @@ export default function ProductCard({
   const href = `/produit/${product.handle}`;
 
   return (
-    <article className="group flex flex-col overflow-hidden rounded-[var(--radius-cute)] bg-white shadow-[0_2px_14px_-8px_rgba(111,76,56,0.35)] ring-1 ring-cocoa-800/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-cute">
+    <article className="group flex flex-col overflow-hidden rounded-3xl bg-white ring-1 ring-cocoa-800/10 transition duration-300 hover:ring-cocoa-800/25">
       <Link href={href} className="relative block" prefetch={priority}>
-        <div className="relative aspect-square overflow-hidden bg-gradient-to-b from-peach-50 to-bubble-50">
+        <div className="relative aspect-square overflow-hidden bg-cream-deep">
           <ProductVisual
             product={product}
             priority={priority}
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 280px"
-            className="h-full w-full p-4 transition-transform duration-500 group-hover:scale-[1.07] group-hover:rotate-2"
-            imageClassName="drop-shadow-[0_8px_14px_rgba(111,76,56,0.16)]"
+            className="h-full w-full p-5 transition-transform duration-500 group-hover:scale-105"
           />
           <div className="absolute left-2.5 top-2.5 flex flex-col items-start gap-1.5">
             {product.badges.slice(0, 2).map((b) => (

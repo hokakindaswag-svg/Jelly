@@ -3,7 +3,7 @@ import { trustBadges } from "@/lib/site";
 /** Réassurance : uniquement des promesses tenables. */
 export default function TrustBadges() {
   return (
-    <section className="bg-cream-deep py-12 sm:py-16">
+    <section className="bg-cream py-14 sm:py-20">
       <div className="mx-auto max-w-6xl px-4">
         <ul className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-5">
           {trustBadges.map((b) => (
