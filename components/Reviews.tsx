@@ -6,11 +6,11 @@ export default function Reviews() {
   const average = (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1);
 
   return (
-    <section className="bg-bubble-50 py-14 sm:py-20">
+    <section className="bg-cream py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-4">
         <SectionHeading
           eyebrow="Ils ont adopté"
-          title={<>💌 Ce que disent nos clientes et clients</>}
+          title={<>Ce que disent nos clientes et clients</>}
           subtitle={`${average}/5 en moyenne sur ${reviews.length} avis publiés.`}
         />
 
@@ -18,7 +18,7 @@ export default function Reviews() {
           {reviews.map((r) => (
             <figure
               key={r.handle}
-              className="flex w-[80%] shrink-0 snap-center flex-col gap-2 rounded-[var(--radius-cute)] bg-white p-5 shadow-[0_2px_14px_-8px_rgba(111,76,56,0.3)] sm:w-[46%] lg:w-auto"
+              className="flex w-[80%] shrink-0 snap-center flex-col gap-2 rounded-3xl bg-white p-5 ring-1 ring-cocoa-800/10 sm:w-[46%] lg:w-auto"
             >
               <Stars rating={r.rating} />
               <h3 className="font-[family-name:var(--font-display)] text-base font-extrabold text-cocoa-800">

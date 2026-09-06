@@ -1,6 +1,5 @@
 import Link from "next/link";
 import ProductVisual from "./ProductVisual";
-import { SectionDecor } from "./ui/HalloweenDecor";
 import { featuredProducts } from "@/lib/products";
 
 /**
@@ -12,9 +11,8 @@ export default function PriceSection() {
   const showcase = featuredProducts.slice(0, 5);
 
   return (
-    <section className="relative overflow-hidden bg-cream-deep py-14 sm:py-20">
-      <SectionDecor />
-      <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 lg:grid-cols-[1.1fr_1fr]">
+    <section className="bg-cream py-16 sm:py-24">
+      <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 lg:grid-cols-[1.1fr_1fr]">
         <div className="text-center lg:text-left">
           <span className="text-sm font-extrabold uppercase tracking-widest text-bubble-500">
             Prix unique

@@ -5,11 +5,11 @@
    Cute Halloween · kawaii · girly · cozy autumn
    ========================================================================== */
 @theme {
-  /* Beige orangé : le fond de toute la boutique pendant la saison Halloween.
-     Assez chaud pour poser l'ambiance, assez clair pour que le cacao reste
-     parfaitement lisible dessus. */
-  --color-cream: #fbeada;
-  --color-cream-deep: #f6ddc4;
+  /* Fond blanc : c'est lui qui porte le parti minimaliste. `cream-deep` est
+     un blanc à peine cassé, juste assez pour séparer deux sections voisines
+     sans avoir à poser une bordure. */
+  --color-cream: #ffffff;
+  --color-cream-deep: #faf8f6;
   --color-milk: #fffdfb;
 
   --color-peach-50: #fff4ec;

@@ -16,7 +16,7 @@ export default function ConfirmationPage() {
 
   return (
     <>
-      <section className="relative overflow-hidden bg-gradient-to-b from-bubble-100 to-cream py-14 sm:py-20">
+      <section className="relative overflow-hidden bg-cream py-14 sm:py-20">
         <div className="deco absolute inset-0" aria-hidden="true">
           {["🎃", "✨", "🧸", "👻", "🎀", "🍂"].map((e, i) => (
             <span

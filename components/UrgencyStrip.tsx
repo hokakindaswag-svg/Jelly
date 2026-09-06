@@ -11,10 +11,10 @@ export default function UrgencyStrip() {
   ];
 
   return (
-    <section className="bg-cocoa-800 py-6 text-white">
+    <section className="border-y border-cocoa-800/10 bg-cream py-5 text-cocoa-600/80">
       <ul className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-8 gap-y-3 px-4 text-center">
         {points.map((p) => (
-          <li key={p.text} className="flex items-center gap-2 text-sm font-bold">
+          <li key={p.text} className="flex items-center gap-2 text-xs font-bold sm:text-sm">
             <span aria-hidden="true">{p.emoji}</span>
             {p.text}
           </li>

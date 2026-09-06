@@ -1,7 +1,6 @@
 import AddToCartButton from "./AddToCartButton";
 import MysteryReveal from "./MysteryReveal";
 import ProductVisual from "./ProductVisual";
-import Sparkles from "./ui/Sparkles";
 import { getByCollection, mysteryProduct } from "@/lib/products";
 
 /**
@@ -14,9 +13,8 @@ export default function MysteryBox() {
   return (
     <section
       id="doudou-mystere"
-      className="relative overflow-hidden bg-gradient-to-br from-lilac-200 via-bubble-100 to-peach-100 py-14 sm:py-20"
+      className="relative overflow-hidden bg-cream-deep py-16 sm:py-24"
     >
-      <Sparkles />
       <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 lg:grid-cols-2">
         {/* La boîte mystère */}
         <div className="order-2 lg:order-1">
