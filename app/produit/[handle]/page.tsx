@@ -102,7 +102,7 @@ export default async function ProductPage({ params }: Params) {
           <section className="mt-16">
             <SectionHeading
               title={<>🧸 Il irait bien avec…</>}
-              subtitle="Tous les doudous sont à 9,99 €."
+              subtitle="Dans le même esprit."
             />
             <div className="mt-6">
               <ProductGrid products={suggestions} />

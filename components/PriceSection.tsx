@@ -3,9 +3,9 @@ import ProductVisual from "./ProductVisual";
 import { featuredProducts } from "@/lib/products";
 
 /**
- * Le prix unique est un pilier de la marque : il a sa propre section.
- * On y annonce le tarif à l'unité et la livraison offerte — jamais la grille
- * par quantité, réservée au panier.
+ * Le prix unique est un pilier de la marque, mais le chiffre lui-même reste
+ * sur les cartes produit : répété en très gros ici, juste sous le hero qui
+ * l'annonce déjà, il donnait un ton de camelote.
  */
 export default function PriceSection() {
   const showcase = featuredProducts.slice(0, 5);
@@ -14,21 +14,15 @@ export default function PriceSection() {
     <section className="bg-cream py-16 sm:py-24">
       <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 lg:grid-cols-[1.1fr_1fr]">
         <div className="text-center lg:text-left">
-          <span className="text-sm font-extrabold uppercase tracking-widest text-bubble-500">
+          <span className="text-xs font-extrabold uppercase tracking-[0.2em] text-bubble-500">
             Prix unique
           </span>
-          <h2 className="mt-2 font-[family-name:var(--font-display)] text-4xl font-extrabold leading-tight text-cocoa-800 sm:text-5xl">
-            🧸 Tous les doudous
+          <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl font-extrabold leading-tight text-cocoa-800 sm:text-5xl">
+            Un seul prix pour toute la boutique
           </h2>
-          <p className="mt-1 font-[family-name:var(--font-display)] text-6xl font-extrabold text-pumpkin-600 sm:text-7xl">
-            9,99 €
-          </p>
           <p className="mx-auto mt-4 max-w-md text-base text-cocoa-600/85 sm:text-lg lg:mx-0">
-            Un seul prix pour toute la boutique. Tu choisis avec le cœur, pas
-            avec une calculatrice.
-          </p>
-          <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-bubble-100 px-5 py-2.5 text-sm font-extrabold text-bubble-500">
-            🚚 Livraison offerte, sans minimum
+            Tu choisis avec le cœur, pas avec une calculatrice. Livraison
+            offerte, sans minimum.
           </p>
           <div>
             <Link

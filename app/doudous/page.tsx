@@ -7,8 +7,8 @@ import { products } from "@/lib/products";
 import { collections } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Tous les doudous — 9,99 €",
-  description: "Toute la collection Doudoumimi. Tous les doudous à 9,99 €.",
+  title: "Tous les doudous",
+  description: "Toute la collection Doudoumimi, livraison offerte.",
 };
 
 export default function DoudousPage() {
@@ -19,7 +19,7 @@ export default function DoudousPage() {
           <SectionHeading
             eyebrow={`${products.length} doudous disponibles`}
             title={<>🧸 Tous les doudous</>}
-            subtitle="Un seul prix, zéro prise de tête : 9,99 € le doudou."
+            subtitle="Un seul prix pour toute la boutique, livraison offerte."
           />
         </div>
       </section>

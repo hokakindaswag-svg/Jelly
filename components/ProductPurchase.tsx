@@ -10,6 +10,7 @@
 
 import { useState } from "react";
 import AddToCartButton from "./AddToCartButton";
+import BuyNowButton from "./BuyNowButton";
 import PriceTag from "./ui/PriceTag";
 import { useCart } from "./CartProvider";
 import { MAX_DOUDOUS } from "@/lib/pricing";
@@ -60,18 +61,20 @@ export default function ProductPurchase({ product }: { product: Product }) {
           )}
         </div>
 
-        <AddToCartButton handle={product.handle} quantity={qty} size="lg" full>
-          Ajouter au panier 🧸
+        <BuyNowButton handle={product.handle} quantity={qty} className="w-full" />
+
+        <AddToCartButton handle={product.handle} quantity={qty} variant="secondary" size="lg" full>
+          Ajouter au panier
         </AddToCartButton>
 
         {!isMystery && (
           <AddToCartButton
             handle={mysteryProduct.handle}
             variant="secondary"
-            size="md"
-            full
+            size="sm"
+            className="self-center border-none !bg-transparent !ring-0 underline decoration-lilac-300 underline-offset-4 !text-lilac-500 hover:!text-lilac-400"
           >
-            + Doudou Mystère (2 €) 🎃
+            + Ajouter un Doudou Mystère (2 €) 🎃
           </AddToCartButton>
         )}
 

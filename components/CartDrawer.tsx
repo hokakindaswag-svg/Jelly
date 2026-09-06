@@ -12,6 +12,7 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 import ProductVisual from "./ProductVisual";
 import { useCart } from "./CartProvider";
+import { checkoutHref, hasPaymentLink } from "@/lib/checkout";
 import { MAX_DOUDOUS, TIERS, nextTierHint, tierFor } from "@/lib/pricing";
 import { formatPrice, mysteryProduct } from "@/lib/products";
 
@@ -134,7 +135,7 @@ export default function CartDrawer() {
               Ton panier est vide
             </p>
             <p className="text-sm text-cocoa-600/80">
-              Tous les doudous sont à 9,99 €. Il y a forcément un qui te fait de l&apos;œil.
+              Il y a forcément un doudou qui te fait de l&apos;œil.
             </p>
             <Link
               href="/doudous"
@@ -258,11 +259,12 @@ export default function CartDrawer() {
               </dl>
 
               <Link
-                href="/checkout"
+                href={checkoutHref(doudouCount + mysteryCount, total)}
                 onClick={close}
+                {...(hasPaymentLink ? { rel: "nofollow" } : {})}
                 className="mt-3 block rounded-full bg-pumpkin-500 px-6 py-4 text-center font-[family-name:var(--font-display)] text-base font-extrabold uppercase tracking-wide text-white shadow-cute transition-transform hover:-translate-y-0.5 active:scale-95"
               >
-                Passer commande
+                Payer {formatPrice(total)}
               </Link>
               <button
                 type="button"

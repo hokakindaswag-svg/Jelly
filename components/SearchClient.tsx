@@ -22,7 +22,7 @@ export default function SearchClient() {
         title={query ? <>🔍 « {query} »</> : <>🔍 Cherche ton doudou</>}
         subtitle={
           query
-            ? `${results.length} résultat${results.length > 1 ? "s" : ""} — tous à 9,99 €.`
+            ? `${results.length} résultat${results.length > 1 ? "s" : ""}.`
             : "Tape un mot dans la barre de recherche : fantôme, citrouille, lapin…"
         }
       />

@@ -64,7 +64,7 @@ export default function MysteryPage() {
             <ProductGrid products={candidates} />
           </div>
           <p className="mt-6 text-center text-sm font-semibold text-cocoa-600/70">
-            Tu préfères choisir toi-même ? Prends-le directement à 9,99 €.
+            Tu préfères choisir toi-même ? Va voir toute la collection.
           </p>
         </div>
       </section>

@@ -24,19 +24,16 @@ import { useCart } from "./CartProvider";
 import { MAX_DOUDOUS, TIERS, nextTierHint, tierFor } from "@/lib/pricing";
 import { formatPrice, mysteryProduct } from "@/lib/products";
 
-const STEPS = ["Coordonnées", "Livraison", "Paiement"] as const;
-
+/**
+ * Un seul écran : coordonnées, adresse et paiement à la suite. Le découpage
+ * en trois étapes rallongeait le parcours sans rien apporter — sur une
+ * commande à un seul produit, chaque étape était une occasion d'abandonner.
+ */
 export default function CheckoutFlow() {
   const router = useRouter();
   const { items, doudouCount, mysteryCount, doudousTotal, savings, total, ready, clear, setQuantity } =
     useCart();
-  const [step, setStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
-
-  function next(e: React.FormEvent) {
-    e.preventDefault();
-    setStep((s) => Math.min(STEPS.length - 1, s + 1));
-  }
 
   function submitOrder(e: React.FormEvent) {
     e.preventDefault();
@@ -52,13 +49,13 @@ export default function CheckoutFlow() {
 
   if (items.length === 0) {
     return (
-      <div className="mx-auto max-w-md rounded-[var(--radius-cute)] bg-white p-8 text-center shadow-sm">
+      <div className="mx-auto max-w-md rounded-3xl bg-white p-8 text-center ring-1 ring-cocoa-800/10">
         <p className="text-4xl" aria-hidden="true">🧺</p>
         <h1 className="mt-2 font-[family-name:var(--font-display)] text-xl font-extrabold text-cocoa-800">
           Ton panier est vide
         </h1>
         <p className="mt-1 text-sm text-cocoa-600/80">
-          Choisis un doudou et il apparaîtra ici. Tous à 9,99 €, livraison offerte.
+          Choisis un doudou et il apparaîtra ici. Livraison offerte.
         </p>
         <Link
           href="/doudous"
@@ -76,150 +73,86 @@ export default function CheckoutFlow() {
   const field =
     "w-full rounded-2xl bg-white px-4 py-3 text-sm text-cocoa-800 outline-none ring-1 ring-cocoa-800/10 placeholder:text-cocoa-400 focus:ring-2 focus:ring-bubble-300";
   const labelCls = "text-xs font-extrabold uppercase tracking-wide text-cocoa-600/80";
+  const legend =
+    "font-[family-name:var(--font-display)] text-lg font-extrabold text-cocoa-800";
 
   return (
     <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:gap-12">
-      {/* ------------------------------ Formulaire ----------------------------- */}
-      <div>
-        <ol className="mb-6 flex items-center gap-2">
-          {STEPS.map((label, i) => (
-            <li key={label} className="flex flex-1 items-center gap-2">
-              <span
-                className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-sm font-extrabold transition ${
-                  i <= step ? "bg-pumpkin-500 text-white" : "bg-white text-cocoa-400 ring-1 ring-cocoa-800/10"
-                }`}
-              >
-                {i + 1}
-              </span>
-              <span className={`hidden text-xs font-bold sm:block ${i <= step ? "text-cocoa-800" : "text-cocoa-400"}`}>
-                {label}
-              </span>
-              {i < STEPS.length - 1 && <span className="h-px flex-1 bg-cocoa-800/10" />}
-            </li>
-          ))}
-        </ol>
-
-        {step === 0 && (
-          <form onSubmit={next} className="flex flex-col gap-4">
-            <h2 className="font-[family-name:var(--font-display)] text-xl font-extrabold text-cocoa-800">
-              📮 Où on t&apos;envoie ton doudou ?
-            </h2>
+      <form onSubmit={submitOrder} className="flex flex-col gap-8">
+        <fieldset className="flex flex-col gap-4">
+          <legend className={legend}>Où on t&apos;envoie ton doudou ?</legend>
+          <label className="flex flex-col gap-1.5">
+            <span className={labelCls}>E-mail</span>
+            <input required type="email" autoComplete="email" placeholder="toi@exemple.fr" className={field} />
+          </label>
+          <div className="grid gap-4 sm:grid-cols-2">
             <label className="flex flex-col gap-1.5">
-              <span className={labelCls}>E-mail</span>
-              <input required type="email" autoComplete="email" placeholder="toi@exemple.fr" className={field} />
-            </label>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <label className="flex flex-col gap-1.5">
-                <span className={labelCls}>Prénom</span>
-                <input required autoComplete="given-name" placeholder="Léa" className={field} />
-              </label>
-              <label className="flex flex-col gap-1.5">
-                <span className={labelCls}>Nom</span>
-                <input required autoComplete="family-name" placeholder="Martin" className={field} />
-              </label>
-            </div>
-            <button
-              type="submit"
-              className="mt-2 rounded-full bg-cocoa-800 px-6 py-4 font-[family-name:var(--font-display)] text-sm font-extrabold uppercase tracking-wide text-white transition-transform hover:-translate-y-0.5 active:scale-95"
-            >
-              Continuer →
-            </button>
-          </form>
-        )}
-
-        {step === 1 && (
-          <form onSubmit={next} className="flex flex-col gap-4">
-            <h2 className="font-[family-name:var(--font-display)] text-xl font-extrabold text-cocoa-800">
-              🚚 Adresse de livraison
-            </h2>
-            <label className="flex flex-col gap-1.5">
-              <span className={labelCls}>Adresse</span>
-              <input required autoComplete="street-address" placeholder="12 rue des Citrouilles" className={field} />
+              <span className={labelCls}>Prénom</span>
+              <input required autoComplete="given-name" placeholder="Léa" className={field} />
             </label>
             <label className="flex flex-col gap-1.5">
-              <span className={labelCls}>Complément (optionnel)</span>
-              <input autoComplete="address-line2" placeholder="Appartement, bâtiment…" className={field} />
+              <span className={labelCls}>Nom</span>
+              <input required autoComplete="family-name" placeholder="Martin" className={field} />
             </label>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <label className="flex flex-col gap-1.5">
-                <span className={labelCls}>Code postal</span>
-                <input required autoComplete="postal-code" inputMode="numeric" placeholder="75011" className={field} />
-              </label>
-              <label className="flex flex-col gap-1.5">
-                <span className={labelCls}>Ville</span>
-                <input required autoComplete="address-level2" placeholder="Paris" className={field} />
-              </label>
-            </div>
+          </div>
+          <label className="flex flex-col gap-1.5">
+            <span className={labelCls}>Adresse</span>
+            <input required autoComplete="street-address" placeholder="12 rue des Citrouilles" className={field} />
+          </label>
+          <label className="flex flex-col gap-1.5">
+            <span className={labelCls}>Complément (optionnel)</span>
+            <input autoComplete="address-line2" placeholder="Appartement, bâtiment…" className={field} />
+          </label>
+          <div className="grid gap-4 sm:grid-cols-2">
             <label className="flex flex-col gap-1.5">
-              <span className={labelCls}>Pays</span>
-              <select required autoComplete="country-name" className={field} defaultValue="France">
-                <option>France</option>
-                <option>Belgique</option>
-                <option>Suisse</option>
-                <option>Luxembourg</option>
-              </select>
+              <span className={labelCls}>Code postal</span>
+              <input required autoComplete="postal-code" inputMode="numeric" placeholder="75011" className={field} />
             </label>
-            <div className="flex gap-3">
-              <button
-                type="button"
-                onClick={() => setStep(0)}
-                className="rounded-full bg-white px-6 py-4 text-sm font-extrabold text-cocoa-800 ring-1 ring-cocoa-800/10"
-              >
-                Retour
-              </button>
-              <button
-                type="submit"
-                className="flex-1 rounded-full bg-cocoa-800 px-6 py-4 font-[family-name:var(--font-display)] text-sm font-extrabold uppercase tracking-wide text-white transition-transform hover:-translate-y-0.5 active:scale-95"
-              >
-                Aller au paiement →
-              </button>
-            </div>
-          </form>
-        )}
-
-        {step === 2 && (
-          <form onSubmit={submitOrder} className="flex flex-col gap-4">
-            <h2 className="font-[family-name:var(--font-display)] text-xl font-extrabold text-cocoa-800">
-              🔒 Paiement sécurisé
-            </h2>
             <label className="flex flex-col gap-1.5">
-              <span className={labelCls}>Numéro de carte</span>
-              <input required inputMode="numeric" placeholder="1234 5678 9012 3456" className={field} />
+              <span className={labelCls}>Ville</span>
+              <input required autoComplete="address-level2" placeholder="Paris" className={field} />
             </label>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <label className="flex flex-col gap-1.5">
-                <span className={labelCls}>Expiration</span>
-                <input required placeholder="10/28" className={field} />
-              </label>
-              <label className="flex flex-col gap-1.5">
-                <span className={labelCls}>Cryptogramme</span>
-                <input required inputMode="numeric" placeholder="123" className={field} />
-              </label>
-            </div>
+          </div>
+          <label className="flex flex-col gap-1.5">
+            <span className={labelCls}>Pays</span>
+            <select required autoComplete="country-name" className={field} defaultValue="France">
+              <option>France</option>
+              <option>Belgique</option>
+              <option>Suisse</option>
+              <option>Luxembourg</option>
+            </select>
+          </label>
+        </fieldset>
 
-            <p className="rounded-2xl bg-white px-4 py-3 text-xs text-cocoa-600/75">
-              🔐 Connexion chiffrée. Tes informations bancaires ne sont jamais stockées par Doudoumimi.
-            </p>
+        <fieldset className="flex flex-col gap-4">
+          <legend className={legend}>Paiement sécurisé</legend>
+          <label className="flex flex-col gap-1.5">
+            <span className={labelCls}>Numéro de carte</span>
+            <input required inputMode="numeric" placeholder="1234 5678 9012 3456" className={field} />
+          </label>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <label className="flex flex-col gap-1.5">
+              <span className={labelCls}>Expiration</span>
+              <input required placeholder="10/28" className={field} />
+            </label>
+            <label className="flex flex-col gap-1.5">
+              <span className={labelCls}>Cryptogramme</span>
+              <input required inputMode="numeric" placeholder="123" className={field} />
+            </label>
+          </div>
+          <p className="text-xs text-cocoa-600/70">
+            Connexion chiffrée. Tes informations bancaires ne sont jamais stockées par Doudoumimi.
+          </p>
+        </fieldset>
 
-            <div className="flex gap-3">
-              <button
-                type="button"
-                onClick={() => setStep(1)}
-                className="rounded-full bg-white px-6 py-4 text-sm font-extrabold text-cocoa-800 ring-1 ring-cocoa-800/10"
-              >
-                Retour
-              </button>
-              <button
-                type="submit"
-                disabled={submitting}
-                className="flex-1 rounded-full bg-pumpkin-500 px-6 py-4 font-[family-name:var(--font-display)] text-sm font-extrabold uppercase tracking-wide text-white shadow-cute transition-transform hover:-translate-y-0.5 active:scale-95 disabled:opacity-60"
-              >
-                {submitting ? "Paiement en cours…" : `Payer ${formatPrice(total)} 🧸`}
-              </button>
-            </div>
-          </form>
-        )}
-      </div>
+        <button
+          type="submit"
+          disabled={submitting}
+          className="rounded-full bg-pumpkin-500 px-6 py-4 font-[family-name:var(--font-display)] text-base font-extrabold uppercase tracking-wide text-white shadow-cute transition-transform hover:-translate-y-0.5 active:scale-95 disabled:opacity-60"
+        >
+          {submitting ? "Paiement en cours…" : `Payer ${formatPrice(total)}`}
+        </button>
+      </form>
 
       {/* ---------------------------- Récapitulatif ---------------------------- */}
       <aside className="lg:sticky lg:top-24 lg:self-start">

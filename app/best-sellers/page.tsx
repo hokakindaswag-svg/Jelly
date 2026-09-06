@@ -7,7 +7,7 @@ import { getBadged, products } from "@/lib/products";
 
 export const metadata: Metadata = {
   title: "Nos coups de cœur",
-  description: "La sélection Doudoumimi. Tous les doudous à 9,99 €, livraison offerte.",
+  description: "La sélection Doudoumimi, livraison offerte.",
 };
 
 export default function BestSellersPage() {
@@ -23,7 +23,7 @@ export default function BestSellersPage() {
           <SectionHeading
             eyebrow="Les chouchous"
             title={<>💕 Nos coups de cœur</>}
-            subtitle="La sélection Doudoumimi, à 9,99 € comme le reste."
+            subtitle="Ceux qu&apos;on met en avant en ce moment."
           />
         </div>
       </section>
