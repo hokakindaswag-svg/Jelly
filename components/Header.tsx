@@ -41,7 +41,7 @@ export default function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-cocoa-800/5 bg-cream/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-cocoa-800/10 bg-cream-deep shadow-[0_1px_0_rgba(111,76,56,0.06)]">
       <div className="mx-auto flex h-14 max-w-7xl items-center gap-2 px-4 sm:h-16 sm:gap-4">
         <button
           type="button"

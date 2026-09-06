@@ -75,7 +75,7 @@ export default function HomePage() {
       </section>
 
       {/* ------------------------------ Collections ----------------------------- */}
-      <section className="relative overflow-hidden bg-white py-14 sm:py-20">
+      <section className="relative overflow-hidden bg-cream-deep py-14 sm:py-20">
         <SectionDecor />
         <div className="relative mx-auto max-w-7xl px-4">
           <SectionHeading

@@ -14,7 +14,7 @@ export default function CheckoutPage() {
     <div className="min-h-screen bg-cream">
       <div className="mx-auto max-w-6xl px-4 py-8 sm:py-12">
         <div className="mb-8 flex flex-col items-center gap-2 text-center">
-          <Logo />
+          <Logo full />
           <p className="text-sm font-bold text-cocoa-600/75">
             Livraison offerte · paiement 100 % sécurisé
           </p>

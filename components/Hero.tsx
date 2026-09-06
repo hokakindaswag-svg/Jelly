@@ -1,6 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import ProductVisual from "./ProductVisual";
 import { Bat, Ghost, Pumpkin, SpiderWeb, Star } from "./ui/HalloweenDecor";
+import { assetUrl } from "@/lib/assets";
 import { featuredProducts, getProduct } from "@/lib/products";
 
 /**
@@ -23,12 +25,27 @@ export default function Hero() {
   const [left, center, right] = cast.length === 3 ? cast : featuredProducts.slice(0, 3);
 
   return (
-    <section className="relative isolate w-full overflow-hidden bg-gradient-to-b from-peach-100 via-bubble-50 to-cream">
-      {/* Halos colorés : donnent de la profondeur sans image de fond */}
+    <section className="relative isolate w-full overflow-hidden bg-cream">
+      {/* Photo d'ambiance en fond, très atténuée : elle pose la matière
+          (peluche, carton d'ouverture) sans jamais concurrencer le texte
+          ni les doudous détourés posés par-dessus. */}
+      <div className="pointer-events-none absolute inset-0 -z-20" aria-hidden="true">
+        <Image
+          src={assetUrl("/brand/hero-bg.webp")}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center opacity-25 mix-blend-multiply"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-cream/70 via-cream/40 to-cream" />
+      </div>
+
+      {/* Halos colorés : redonnent de la profondeur par-dessus la photo */}
       <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
-        <div className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-pumpkin-300/30 blur-3xl" />
-        <div className="absolute right-0 top-1/3 h-80 w-80 rounded-full bg-bubble-200/40 blur-3xl" />
-        <div className="absolute bottom-0 left-1/3 h-64 w-64 rounded-full bg-lilac-200/40 blur-3xl" />
+        <div className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-pumpkin-300/25 blur-3xl" />
+        <div className="absolute right-0 top-1/3 h-80 w-80 rounded-full bg-bubble-200/30 blur-3xl" />
+        <div className="absolute bottom-0 left-1/3 h-64 w-64 rounded-full bg-lilac-200/30 blur-3xl" />
       </div>
 
       {/* Décor Halloween cute */}
@@ -70,13 +87,13 @@ export default function Hero() {
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
             <Link
               href="/doudous"
-              className="inline-flex items-center justify-center rounded-full bg-pumpkin-500 px-6 py-4 sm:px-8 font-[family-name:var(--font-display)] text-base font-extrabold uppercase tracking-wide text-white shadow-cute transition-transform hover:-translate-y-0.5 hover:bg-pumpkin-600 active:scale-95"
+              className="inline-flex items-center justify-center rounded-full bg-pumpkin-500 px-6 py-4 sm:whitespace-nowrap sm:px-8 font-[family-name:var(--font-display)] text-base font-extrabold uppercase tracking-wide text-white shadow-cute transition-transform hover:-translate-y-0.5 hover:bg-pumpkin-600 active:scale-95"
             >
               Voir les doudous
             </Link>
             <Link
               href="/collections/halloween"
-              className="inline-flex items-center justify-center rounded-full bg-white px-6 py-4 sm:px-8 font-[family-name:var(--font-display)] text-base font-extrabold uppercase tracking-wide text-cocoa-800 shadow-sm ring-2 ring-cocoa-800/10 transition-transform hover:-translate-y-0.5 hover:ring-bubble-300 active:scale-95"
+              className="inline-flex items-center justify-center rounded-full bg-white px-6 py-4 sm:whitespace-nowrap sm:px-8 font-[family-name:var(--font-display)] text-base font-extrabold uppercase tracking-wide text-cocoa-800 shadow-sm ring-2 ring-cocoa-800/10 transition-transform hover:-translate-y-0.5 hover:ring-bubble-300 active:scale-95"
             >
               🎃 Collection Halloween
             </Link>
