@@ -1,16 +1,17 @@
+import Image from "next/image";
 import Link from "next/link";
-import Plushie from "./Plushie";
 import Sparkles from "./ui/Sparkles";
+import { assetUrl } from "@/lib/assets";
 import { getProduct } from "@/lib/products";
 
-const CAST = ["mimi-le-fantome", "pompom-la-citrouille", "batou-la-chauve-souris", "sorcia-la-petite-sorciere"];
+const HERO_PRODUCT = "boubou-lourson";
 
 /**
  * Hero : la scène d'automne. En 3 secondes on doit comprendre
  * c'est quoi, combien ça coûte, et pourquoi acheter maintenant.
  */
 export default function Hero() {
-  const cast = CAST.map(getProduct).filter(Boolean);
+  const hero = getProduct(HERO_PRODUCT);
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-peach-100 via-bubble-50 to-cream">
@@ -59,30 +60,30 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* Scène : plusieurs doudous Halloween ensemble */}
+        {/* Photo vedette : le doudou best-seller, tel quel */}
         <div className="relative mx-auto w-full max-w-md lg:max-w-none">
-          <div className="relative aspect-square">
-            <div className="absolute inset-6 rounded-full bg-gradient-to-br from-pumpkin-300/40 to-bubble-200/50 blur-2xl" />
-            {cast.map((p, i) => {
-              const layout = [
-                "left-[6%] top-[8%] w-[46%] animate-float",
-                "right-[4%] top-[18%] w-[42%] animate-wiggle",
-                "left-[18%] bottom-[4%] w-[40%] animate-wiggle",
-                "right-[12%] bottom-[8%] w-[38%] animate-float",
-              ][i];
-              return (
-                <Link
-                  key={p!.handle}
-                  href={`/produit/${p!.handle}`}
-                  className={`absolute ${layout} drop-shadow-xl transition-transform duration-300 hover:scale-110`}
-                  style={{ animationDelay: `${i * 0.4}s` }}
-                  aria-label={p!.name}
-                >
-                  <Plushie art={p!.art} palette={p!.palette} label={p!.name} className="h-full w-full" />
-                </Link>
-              );
-            })}
-            <span className="deco absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl opacity-60" aria-hidden="true">
+          <div className="relative aspect-[4/5] animate-pop-in">
+            <div className="absolute inset-4 rounded-[2.5rem] bg-gradient-to-br from-pumpkin-300/40 to-bubble-200/50 blur-2xl" />
+            {hero?.image ? (
+              <Link
+                href={`/produit/${hero.handle}`}
+                aria-label={hero.name}
+                className="group relative block h-full w-full overflow-hidden rounded-[var(--radius-cute)] shadow-cute ring-4 ring-white transition-transform duration-300 hover:-translate-y-1"
+              >
+                <Image
+                  src={assetUrl(hero.image)}
+                  alt={hero.name}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 90vw, 480px"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <span className="absolute bottom-4 left-4 flex items-center gap-1.5 rounded-full bg-white/95 px-4 py-2 font-[family-name:var(--font-display)] text-sm font-extrabold text-cocoa-800 shadow-cute backdrop-blur">
+                  🧸 {hero.name} · 9,99 €
+                </span>
+              </Link>
+            ) : null}
+            <span className="deco absolute -right-2 -top-2 text-4xl opacity-80 animate-wiggle" aria-hidden="true">
               ✨
             </span>
           </div>

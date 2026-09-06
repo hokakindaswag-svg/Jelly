@@ -240,6 +240,7 @@ const catalog: Product[] = [
     variantId: "doudou-boubou-lourson",
     art: "bear",
     palette: { body: "#a97f63", accent: "#6f4c38", blush: "#ffa8c8" },
+    image: "/produits/boubou-lifestyle.webp",
     badges: ["bestseller"],
     collections: ["classiques", "cute"],
     rating: 4.9,
