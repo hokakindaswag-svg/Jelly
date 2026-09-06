@@ -5,6 +5,6 @@ export const dynamic = "force-static";
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: { userAgent: "*", allow: "/", disallow: ["/checkout", "/recherche"] },
-    sitemap: "https://doudoumimi.fr/sitemap.xml",
+    sitemap: "https://doudoumimi.site/sitemap.xml",
   };
 }

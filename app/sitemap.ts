@@ -4,7 +4,7 @@ export const dynamic = "force-static";
 import { allProducts } from "@/lib/products";
 import { collections } from "@/lib/site";
 
-const BASE = "https://doudoumimi.fr";
+const BASE = "https://doudoumimi.site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = [

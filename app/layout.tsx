@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://doudoumimi.fr"),
+  metadataBase: new URL("https://doudoumimi.site"),
   title: {
     default: `${site.name} — ${site.tagline}`,
     template: `%s · ${site.name}`,
