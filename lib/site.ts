@@ -111,9 +111,9 @@ export const trustBadges = [
     text: "Carte bancaire, Apple Pay et Google Pay via un paiement chiffré.",
   },
   {
-    emoji: "📦",
-    title: "Colis suivi",
-    text: "Un numéro de suivi t'est envoyé par e-mail dès l'expédition.",
+    emoji: "🚚",
+    title: "Livraison offerte",
+    text: "Sur toutes les commandes, sans minimum d'achat. Colis suivi.",
   },
   {
     emoji: "💕",
