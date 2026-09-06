@@ -28,11 +28,9 @@ jobs:
 
       - run: npm ci
 
-      # Le site vit sous https://<user>.github.io/Jelly/ : Next doit préfixer
-      # tous les liens et assets avec /Jelly.
+      # Le site est servi à la racine du domaine (public/CNAME) : aucun
+      # préfixe d'URL. Le remettre casserait tous les liens et les assets.
       - run: npm run build
-        env:
-          NEXT_PUBLIC_BASE_PATH: /Jelly
 
       # enablement bascule la source Pages sur « GitHub Actions » si besoin.
       - uses: actions/configure-pages@v5

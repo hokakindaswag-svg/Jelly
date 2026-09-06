@@ -3,9 +3,11 @@ import type { NextConfig } from "next";
 /**
  * Le site est exporté en HTML statique pour être hébergé sur GitHub Pages.
  *
- * `NEXT_PUBLIC_BASE_PATH` vaut "/Jelly" en CI (le site vit sous
- * https://<user>.github.io/Jelly/) et reste vide en développement local,
- * où le site est servi à la racine.
+ * Le site vit à la racine de son domaine (doudoumimi.site, cf. public/CNAME),
+ * donc `NEXT_PUBLIC_BASE_PATH` reste vide. La variable n'existe que pour un
+ * déploiement dans un sous-dossier (github.io/<repo>/) : la renseigner
+ * préfixe alors liens et assets. Une valeur erronée sert un site sans style,
+ * toutes les URLs pointant à côté.
  */
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
