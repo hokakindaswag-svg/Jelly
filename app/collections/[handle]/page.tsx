@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import MysteryBox from "@/components/MysteryBox";
 import ProductGrid from "@/components/ProductGrid";
 import SectionHeading from "@/components/ui/SectionHeading";
+import HalloweenPattern from "@/components/ui/HalloweenPattern";
+import ShippingBanner from "@/components/ShippingBanner";
 import TrustBadges from "@/components/TrustBadges";
 import UrgencyStrip from "@/components/UrgencyStrip";
 import { getByCollection, type CollectionHandle } from "@/lib/products";
@@ -31,13 +34,14 @@ export default async function CollectionPage({ params }: Params) {
 
   return (
     <>
-      <section
-        className="py-12 sm:py-16"
-        style={{
-          backgroundImage: `linear-gradient(160deg, ${collection.colors.from}, ${collection.colors.to})`,
-        }}
-      >
-        <div className="mx-auto max-w-7xl px-4">
+      <section className="relative overflow-hidden bg-cream py-14 sm:py-20">
+        {/* Le motif doit se voir ; c'est le halo derrière le texte, et non un
+            voile sur toute la surface, qui garde le titre lisible. */}
+        <HalloweenPattern className="opacity-60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cream/45 to-cream" />
+        <div className="absolute left-1/2 top-1/2 h-64 w-[min(90%,44rem)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cream/85 blur-3xl" />
+
+        <div className="relative mx-auto max-w-7xl px-4">
           <SectionHeading
             eyebrow={collection.subtitle}
             title={
@@ -47,9 +51,14 @@ export default async function CollectionPage({ params }: Params) {
             }
             subtitle={collection.blurb}
           />
-          <p className="mx-auto mt-4 w-fit rounded-full bg-white/90 px-5 py-2.5 font-[family-name:var(--font-display)] text-lg font-extrabold text-pumpkin-600 shadow-sm">
-            Livraison offerte 🎀
-          </p>
+          <div className="mt-6 text-center">
+            <Link
+              href="/doudous"
+              className="inline-flex rounded-full bg-cocoa-800 px-8 py-4 font-[family-name:var(--font-display)] text-sm font-extrabold uppercase tracking-wide text-white shadow-cute transition-transform hover:-translate-y-0.5 hover:bg-cocoa-600 active:scale-95"
+            >
+              Voir tous les doudous
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -61,24 +70,13 @@ export default async function CollectionPage({ params }: Params) {
             {items.length} doudou{items.length > 1 ? "s" : ""} dans cette collection
           </p>
           <ProductGrid products={items} />
-
-          <div className="mt-10 flex flex-col justify-center gap-3 text-center sm:flex-row">
-            <Link
-              href="/doudou-mystere"
-              className="rounded-full bg-lilac-400 px-7 py-4 font-[family-name:var(--font-display)] text-sm font-extrabold uppercase tracking-wide text-white shadow-pop transition-transform hover:-translate-y-0.5"
-            >
-              🎁 Doudou Mystère — 2 €
-            </Link>
-            <Link
-              href="/doudous"
-              className="rounded-full bg-white px-7 py-4 font-[family-name:var(--font-display)] text-sm font-extrabold uppercase tracking-wide text-cocoa-800 ring-2 ring-cocoa-800/10 transition-transform hover:-translate-y-0.5"
-            >
-              Voir tous les doudous
-            </Link>
-          </div>
         </div>
       </section>
 
+      {/* L'offre Mystère en grand, juste sous la collection */}
+      <MysteryBox />
+
+      <ShippingBanner />
       <TrustBadges />
     </>
   );

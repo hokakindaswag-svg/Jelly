@@ -4,6 +4,7 @@ import PriceSection from "@/components/PriceSection";
 import ProductGrid from "@/components/ProductGrid";
 import MysteryBox from "@/components/MysteryBox";
 import Reviews from "@/components/Reviews";
+import ShippingBanner from "@/components/ShippingBanner";
 import CollectionCard from "@/components/CollectionCard";
 import TrustBadges from "@/components/TrustBadges";
 import UrgencyStrip from "@/components/UrgencyStrip";
@@ -48,6 +49,8 @@ export default function HomePage() {
         </div>
       </section>
 
+
+      <ShippingBanner />
 
       {/* ---------------------------- Les plus mignons -------------------------- */}
       <section className="bg-cream py-14 sm:py-20">
