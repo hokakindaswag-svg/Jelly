@@ -1,28 +1,31 @@
 "use client";
 
 /**
- * Bloc d'achat de la page produit.
+ * Bloc d'achat de la fiche produit.
  *
- * Sélecteur de quantité + bouton ACHETER MAINTENANT. Aucun panier : le clic
- * envoie directement au checkout avec la quantité choisie. Sur mobile, une
- * barre d'achat collante reste accessible pendant que l'on fait défiler les
- * photos et la description.
+ * Quantité + ajout au panier. Le prix montré est le prix unitaire multiplié :
+ * aucune allusion aux paliers ici, ils se découvrent au panier. Sur mobile,
+ * une barre collante garde le bouton accessible pendant la lecture.
  */
 
 import { useState } from "react";
-import BuyNowButton from "./BuyNowButton";
+import AddToCartButton from "./AddToCartButton";
 import PriceTag from "./ui/PriceTag";
-import { formatPrice, type Product } from "@/lib/products";
+import { useCart } from "./CartProvider";
+import { MAX_DOUDOUS } from "@/lib/pricing";
+import { formatPrice, mysteryProduct, type Product } from "@/lib/products";
 
 export default function ProductPurchase({ product }: { product: Product }) {
   const [qty, setQty] = useState(1);
-  const max = Math.min(10, product.stock);
-  const total = product.price * qty;
+  const { doudouCount } = useCart();
+  const isMystery = product.handle === mysteryProduct.handle;
+  // On ne propose jamais plus que ce qui tient encore dans la commande.
+  const max = isMystery ? 10 : Math.max(1, MAX_DOUDOUS - doudouCount);
 
   return (
     <>
       <div className="flex flex-col gap-4">
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <span className="text-sm font-bold text-cocoa-600/80">Quantité</span>
           <div className="inline-flex items-center rounded-full bg-white shadow-sm ring-1 ring-cocoa-800/10">
             <button
@@ -34,7 +37,10 @@ export default function ProductPurchase({ product }: { product: Product }) {
             >
               −
             </button>
-            <span aria-live="polite" className="w-10 text-center font-[family-name:var(--font-display)] text-lg font-extrabold text-cocoa-800">
+            <span
+              aria-live="polite"
+              className="w-10 text-center font-[family-name:var(--font-display)] text-lg font-extrabold text-cocoa-800"
+            >
               {qty}
             </span>
             <button
@@ -48,29 +54,29 @@ export default function ProductPurchase({ product }: { product: Product }) {
             </button>
           </div>
           {qty > 1 && (
-            <span className="text-sm font-bold text-pumpkin-600">
-              Total : {formatPrice(total)}
+            <span className="text-sm font-bold text-cocoa-800">
+              {formatPrice(product.price * qty)}
             </span>
           )}
         </div>
 
-        <BuyNowButton handle={product.handle} quantity={qty} size="lg" full>
-          Acheter maintenant 🧸
-        </BuyNowButton>
+        <AddToCartButton handle={product.handle} quantity={qty} size="lg" full>
+          Ajouter au panier 🧸
+        </AddToCartButton>
 
-        <BuyNowButton
-          handle={product.handle}
-          quantity={qty}
-          mystery
-          variant="secondary"
-          size="md"
-          full
-        >
-          + Ajouter un Doudou Mystère (2 €) 🎃
-        </BuyNowButton>
+        {!isMystery && (
+          <AddToCartButton
+            handle={mysteryProduct.handle}
+            variant="secondary"
+            size="md"
+            full
+          >
+            + Doudou Mystère (2 €) 🎃
+          </AddToCartButton>
+        )}
 
-        <p className="text-center text-xs text-cocoa-600/70">
-          Paiement direct et sécurisé · pas de panier, pas de détour
+        <p className="text-center text-xs font-bold text-bubble-500">
+          🚚 Livraison offerte · paiement sécurisé
         </p>
       </div>
 
@@ -79,14 +85,13 @@ export default function ProductPurchase({ product }: { product: Product }) {
         <div className="flex items-center gap-3">
           <div className="min-w-0">
             <p className="truncate text-xs font-bold text-cocoa-600/80">{product.name}</p>
-            <PriceTag price={total} size="md" />
+            <PriceTag price={product.price * qty} size="md" />
           </div>
-          <BuyNowButton handle={product.handle} quantity={qty} size="md" className="ml-auto flex-1">
-            Acheter maintenant
-          </BuyNowButton>
+          <AddToCartButton handle={product.handle} quantity={qty} size="md" className="ml-auto flex-1">
+            Ajouter
+          </AddToCartButton>
         </div>
       </div>
-      {/* Espace pour ne pas masquer le contenu derrière la barre collante */}
       <div className="h-20 lg:hidden" aria-hidden="true" />
     </>
   );

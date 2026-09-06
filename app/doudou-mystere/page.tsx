@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import MysteryBox from "@/components/MysteryBox";
 import ProductGrid from "@/components/ProductGrid";
-import BuyNowButton from "@/components/BuyNowButton";
+import AddToCartButton from "@/components/AddToCartButton";
 import SectionHeading from "@/components/ui/SectionHeading";
 import TrustBadges from "@/components/TrustBadges";
 import { getByCollection, mysteryProduct } from "@/lib/products";
@@ -47,9 +47,9 @@ export default function MysteryPage() {
           </ol>
 
           <div className="mt-10 text-center">
-            <BuyNowButton handle={mysteryProduct.handle} variant="mystery" size="lg">
+            <AddToCartButton handle={mysteryProduct.handle} variant="mystery" size="lg">
               Je tente ma chance 🎃
-            </BuyNowButton>
+            </AddToCartButton>
           </div>
         </div>
       </section>

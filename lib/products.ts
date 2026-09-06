@@ -7,9 +7,7 @@
  *
  * Chaque produit porte un `variantId` : c'est la seule chose à remplacer par
  * l'ID de variante Shopify pour brancher le checkout direct
- * (`/cart/{variantId}:{qty}` ou l'API Cart -> checkoutUrl). Aucun panier
- * n'existe côté site : le bouton « Acheter maintenant » envoie directement
- * vers le checkout.
+ * (`/cart/{variantId}:{qty}` ou l'API Cart -> checkoutUrl).
  */
 
 export const DOUDOU_PRICE = 999; // 9,99 €
@@ -58,10 +56,11 @@ export type Product = {
   image?: string;
   badges: Badge[];
   collections: CollectionHandle[];
-  rating: number;
-  reviewCount: number;
-  /** Stock volontairement bas et réel : la rareté doit rester crédible. */
-  stock: number;
+  /**
+   * Rang de mise en avant : plus le nombre est petit, plus le doudou remonte
+   * dans les grilles. Absent = ordre naturel du catalogue.
+   */
+  featured?: number;
   size: string;
   details: string[];
 };
@@ -84,9 +83,7 @@ const catalog: Product[] = [
     image: "/produits/ghost-pumpkin.webp",
     badges: ["halloween", "bestseller", "limited"],
     collections: ["halloween", "spooky", "editions-limitees"],
-    rating: 4.9,
-    reviewCount: 214,
-    stock: 38,
+    featured: 10,
     size: "18 cm",
     details: [
       "Peluche ultra douce, garnissage moelleux",
@@ -107,9 +104,7 @@ const catalog: Product[] = [
     palette: { body: "#ff9d4d", accent: "#6f4c38", blush: "#ff7fae" },
     badges: ["halloween", "bestseller"],
     collections: ["halloween", "cute"],
-    rating: 4.8,
-    reviewCount: 176,
-    stock: 52,
+    featured: 12,
     size: "16 cm",
     details: [
       "Forme ronde super satisfaisante à serrer",
@@ -130,9 +125,6 @@ const catalog: Product[] = [
     palette: { body: "#b191ff", accent: "#9670f2", blush: "#ff7fae" },
     badges: ["halloween", "limited"],
     collections: ["halloween", "spooky", "editions-limitees"],
-    rating: 4.9,
-    reviewCount: 143,
-    stock: 24,
     size: "20 cm d'envergure",
     details: [
       "Ailes en velours tout doux",
@@ -152,9 +144,6 @@ const catalog: Product[] = [
     palette: { body: "#4a2f22", accent: "#ffa8c8", blush: "#ff7fae" },
     badges: ["halloween", "new"],
     collections: ["halloween", "spooky"],
-    rating: 4.7,
-    reviewCount: 88,
-    stock: 41,
     size: "17 cm",
     details: [
       "Nœud rose amovible",
@@ -175,9 +164,7 @@ const catalog: Product[] = [
     palette: { body: "#ffe0ec", accent: "#9670f2", blush: "#f95d97" },
     badges: ["halloween", "limited", "new"],
     collections: ["halloween", "editions-limitees", "cute"],
-    rating: 5,
-    reviewCount: 62,
-    stock: 19,
+    featured: 11,
     size: "19 cm",
     details: [
       "Chapeau de sorcière rembourré",
@@ -198,9 +185,6 @@ const catalog: Product[] = [
     palette: { body: "#9670f2", accent: "#33211a", blush: "#ffa8c8" },
     badges: ["halloween"],
     collections: ["halloween", "spooky"],
-    rating: 4.6,
-    reviewCount: 74,
-    stock: 33,
     size: "15 cm",
     details: [
       "Pattes souples et enroulables",
@@ -220,9 +204,6 @@ const catalog: Product[] = [
     palette: { body: "#ffe0ec", accent: "#ffc7dc", blush: "#f95d97" },
     badges: ["halloween", "new"],
     collections: ["halloween", "cute", "spooky"],
-    rating: 4.9,
-    reviewCount: 97,
-    stock: 45,
     size: "18 cm",
     details: [
       "Rose pastel très doux",
@@ -243,9 +224,7 @@ const catalog: Product[] = [
     image: "/produits/boubou-lifestyle.webp",
     badges: ["bestseller"],
     collections: ["classiques", "cute"],
-    rating: 4.9,
-    reviewCount: 302,
-    stock: 74,
+    featured: 1,
     size: "22 cm",
     details: [
       "Notre doudou le plus vendu",
@@ -266,9 +245,7 @@ const catalog: Product[] = [
     image: "/produits/bunny-love.webp",
     badges: ["bestseller", "new"],
     collections: ["classiques", "cute"],
-    rating: 4.8,
-    reviewCount: 189,
-    stock: 61,
+    featured: 2,
     size: "21 cm",
     details: [
       "Oreilles souples ultra satisfaisantes",
@@ -288,9 +265,6 @@ const catalog: Product[] = [
     palette: { body: "#9ad4a0", accent: "#5fa86c", blush: "#ff7fae" },
     badges: ["bestseller"],
     collections: ["classiques", "cute"],
-    rating: 4.7,
-    reviewCount: 156,
-    stock: 58,
     size: "17 cm",
     details: [
       "Tient assise toute seule",
@@ -310,9 +284,6 @@ const catalog: Product[] = [
     palette: { body: "#ffd67a", accent: "#f97d1c", blush: "#ff7fae" },
     badges: ["new"],
     collections: ["cute", "classiques"],
-    rating: 4.8,
-    reviewCount: 71,
-    stock: 47,
     size: "18 cm",
     details: [
       "5 branches parfaitement rembourrées",
@@ -332,9 +303,6 @@ const catalog: Product[] = [
     palette: { body: "#f2ebff", accent: "#cbb4ff", blush: "#ffa8c8" },
     badges: ["new", "limited"],
     collections: ["cute", "editions-limitees"],
-    rating: 4.9,
-    reviewCount: 58,
-    stock: 22,
     size: "19 cm",
     details: [
       "Croissant de lune tout doux",
@@ -354,9 +322,6 @@ const catalog: Product[] = [
     palette: { body: "#fffdfb", accent: "#e26404", blush: "#ff7fae" },
     badges: ["new"],
     collections: ["cute", "classiques"],
-    rating: 4.7,
-    reviewCount: 44,
-    stock: 39,
     size: "16 cm",
     details: [
       "Pois crème cousus un par un",
@@ -376,9 +341,6 @@ const catalog: Product[] = [
     palette: { body: "#ffa8c8", accent: "#ff9d4d", blush: "#f95d97" },
     badges: ["halloween", "new"],
     collections: ["halloween", "cute"],
-    rating: 4.6,
-    reviewCount: 51,
-    stock: 43,
     size: "20 cm",
     details: [
       "Forme papillote très satisfaisante",
@@ -399,9 +361,6 @@ const catalog: Product[] = [
     palette: { body: "#fff7ef", accent: "#cbb4ff", blush: "#ff7fae" },
     badges: ["halloween", "limited"],
     collections: ["halloween", "spooky", "editions-limitees"],
-    rating: 4.8,
-    reviewCount: 66,
-    stock: 17,
     size: "16 cm",
     details: [
       "Nœud lilas sur le crâne",
@@ -421,9 +380,6 @@ const catalog: Product[] = [
     palette: { body: "#ffd67a", accent: "#f97d1c", blush: "#ff7fae" },
     badges: ["halloween", "new"],
     collections: ["halloween", "cute"],
-    rating: 4.7,
-    reviewCount: 39,
-    stock: 48,
     size: "15 cm",
     details: [
       "Mini chapeau citrouille cousu",
@@ -443,9 +399,6 @@ const catalog: Product[] = [
     palette: { body: "#fffdfb", accent: "#e3d6ff", blush: "#ffa8c8" },
     badges: ["bestseller"],
     collections: ["classiques", "cute"],
-    rating: 4.9,
-    reviewCount: 208,
-    stock: 66,
     size: "20 cm",
     details: [
       "La peluche la plus douce de la gamme",
@@ -465,9 +418,6 @@ const catalog: Product[] = [
     palette: { body: "#ffb877", accent: "#a97f63", blush: "#f95d97" },
     badges: ["halloween", "limited"],
     collections: ["halloween", "editions-limitees", "cute"],
-    rating: 4.8,
-    reviewCount: 83,
-    stock: 29,
     size: "12 cm",
     details: [
       "Format mini avec anneau",
@@ -488,9 +438,6 @@ const catalog: Product[] = [
     image: "/produits/mummy.webp",
     badges: ["halloween", "new"],
     collections: ["halloween", "spooky"],
-    rating: 4.9,
-    reviewCount: 24,
-    stock: 33,
     size: "18 cm",
     details: [
       "Bandelettes cousues, non amovibles",
@@ -511,9 +458,6 @@ const catalog: Product[] = [
     image: "/produits/grim-reaper.webp",
     badges: ["halloween", "new", "limited"],
     collections: ["halloween", "spooky", "editions-limitees"],
-    rating: 4.8,
-    reviewCount: 19,
-    stock: 21,
     size: "17 cm",
     details: [
       "Cape à capuche amovible",
@@ -534,9 +478,6 @@ const catalog: Product[] = [
     image: "/produits/jacko.webp",
     badges: ["halloween", "new", "limited"],
     collections: ["halloween", "editions-limitees", "cute"],
-    rating: 4.9,
-    reviewCount: 31,
-    stock: 26,
     size: "20 cm",
     details: [
       "Pull citrouille tricoté et chapeau amovibles",
@@ -557,9 +498,6 @@ const catalog: Product[] = [
     image: "/produits/bat-skeleton.webp",
     badges: ["halloween", "new", "limited"],
     collections: ["halloween", "spooky", "editions-limitees"],
-    rating: 5,
-    reviewCount: 27,
-    stock: 18,
     size: "18 cm",
     details: [
       "Combinaison à capuche avec ailes",
@@ -580,9 +518,7 @@ const catalog: Product[] = [
     image: "/produits/dino-green.webp",
     badges: ["new"],
     collections: ["classiques", "cute"],
-    rating: 4.9,
-    reviewCount: 22,
-    stock: 40,
+    featured: 3,
     size: "18 cm",
     details: [
       "Combinaison à capuche avec crête cousue",
@@ -603,9 +539,7 @@ const catalog: Product[] = [
     image: "/produits/dino-pink.webp",
     badges: ["new"],
     collections: ["classiques", "cute"],
-    rating: 4.9,
-    reviewCount: 18,
-    stock: 37,
+    featured: 4,
     size: "18 cm",
     details: [
       "Combinaison à capuche avec crête cousue",
@@ -626,9 +560,7 @@ const catalog: Product[] = [
     image: "/produits/bear-cream-pompom.webp",
     badges: ["new", "bestseller"],
     collections: ["classiques", "cute"],
-    rating: 4.9,
-    reviewCount: 35,
-    stock: 44,
+    featured: 6,
     size: "19 cm",
     details: [
       "Combinaison ultra pelucheuse à capuche",
@@ -649,9 +581,6 @@ const catalog: Product[] = [
     image: "/produits/bear-trapper-overalls.webp",
     badges: ["new"],
     collections: ["classiques", "cute"],
-    rating: 4.8,
-    reviewCount: 15,
-    stock: 31,
     size: "19 cm",
     details: [
       "Salopette en velours côtelé amovible",
@@ -672,9 +601,7 @@ const catalog: Product[] = [
     image: "/produits/bee.webp",
     badges: ["new"],
     collections: ["classiques", "cute"],
-    rating: 4.9,
-    reviewCount: 21,
-    stock: 34,
+    featured: 8,
     size: "20 cm",
     details: [
       "Costume rayé avec antennes à pompons",
@@ -695,9 +622,6 @@ const catalog: Product[] = [
     image: "/produits/pajama-pink.webp",
     badges: ["new"],
     collections: ["classiques", "cute"],
-    rating: 4.9,
-    reviewCount: 14,
-    stock: 28,
     size: "19 cm",
     details: [
       "Pyjama avec nuages brodés",
@@ -718,9 +642,7 @@ const catalog: Product[] = [
     image: "/produits/elephant.webp",
     badges: ["new"],
     collections: ["classiques", "cute"],
-    rating: 4.8,
-    reviewCount: 12,
-    stock: 26,
+    featured: 9,
     size: "20 cm",
     details: [
       "Immenses oreilles à l'intérieur rose",
@@ -741,9 +663,6 @@ const catalog: Product[] = [
     image: "/produits/cow.webp",
     badges: ["new"],
     collections: ["classiques", "cute"],
-    rating: 4.9,
-    reviewCount: 17,
-    stock: 30,
     size: "18 cm",
     details: [
       "Combinaison à capuche imprimée vache",
@@ -764,9 +683,7 @@ const catalog: Product[] = [
     image: "/produits/koala.webp",
     badges: ["new"],
     collections: ["classiques", "cute"],
-    rating: 4.9,
-    reviewCount: 20,
-    stock: 32,
+    featured: 7,
     size: "19 cm",
     details: [
       "Combinaison grise avec ventre blanc",
@@ -787,9 +704,6 @@ const catalog: Product[] = [
     image: "/produits/bear-streetwear.webp",
     badges: ["new"],
     collections: ["classiques", "cute"],
-    rating: 4.9,
-    reviewCount: 16,
-    stock: 27,
     size: "21 cm",
     details: [
       "Bonnet, écharpe et salopette amovibles",
@@ -810,9 +724,6 @@ const catalog: Product[] = [
     image: "/produits/bear-vintage.webp",
     badges: ["new"],
     collections: ["classiques", "cute"],
-    rating: 4.9,
-    reviewCount: 13,
-    stock: 24,
     size: "18 cm",
     details: [
       "Béret et cape à carreaux amovibles",
@@ -833,9 +744,7 @@ const catalog: Product[] = [
     image: "/produits/bunny-strawberry.webp",
     badges: ["new"],
     collections: ["classiques", "cute"],
-    rating: 4.9,
-    reviewCount: 19,
-    stock: 29,
+    featured: 5,
     size: "22 cm",
     details: [
       "Combinaison rose avec cœur brodé",
@@ -856,9 +765,6 @@ const catalog: Product[] = [
     image: "/produits/bunny-egg.webp",
     badges: ["new"],
     collections: ["classiques", "cute"],
-    rating: 4.8,
-    reviewCount: 11,
-    stock: 22,
     size: "20 cm",
     details: [
       "Costume d'œuf de Pâques amovible",
@@ -885,9 +791,6 @@ export const mysteryProduct: Product = {
   image: "/produits/doudou-mystere.webp",
   badges: ["halloween", "limited"],
   collections: ["halloween", "editions-limitees"],
-  rating: 4.8,
-  reviewCount: 431,
-  stock: 120,
   size: "12 à 20 cm selon le doudou",
   details: [
     "1 doudou surprise pioché dans la collection Halloween",
@@ -901,14 +804,22 @@ export const mysteryProduct: Product = {
 /* -------------------------------------------------------------------------- */
 
 /**
- * Ordre d'affichage du catalogue : les doudous photographiés passent devant.
- * Une vraie photo convertit mieux qu'une illustration, donc elle mérite le
- * haut des grilles ; le reste garde son ordre d'origine.
+ * Ce que la boutique expose.
+ *
+ * Un doudou sans photo n'est pas affiché : une carte vide ou une illustration
+ * de remplacement ne vend rien et casse la grille. Il reste dans `catalog`
+ * (donc dans un futur mapping Shopify) et réapparaît seul le jour où on lui
+ * ajoute une image.
+ *
+ * L'ordre est un ordre de merchandising : `featured` d'abord (les doudous à
+ * plus fort potentiel), le reste ensuite dans l'ordre du catalogue.
  */
-export const products: Product[] = [
-  ...catalog.filter((p) => p.image),
-  ...catalog.filter((p) => !p.image),
-];
+export const products: Product[] = catalog
+  .filter((p) => p.image)
+  .sort((a, b) => (a.featured ?? Infinity) - (b.featured ?? Infinity));
+
+/** Les têtes d'affiche, pour le hero et les sections « les plus mignons ». */
+export const featuredProducts: Product[] = products.filter((p) => p.featured !== undefined);
 
 export const allProducts: Product[] = [...products, mysteryProduct];
 
@@ -936,6 +847,11 @@ export function searchProducts(query: string): Product[] {
   );
 }
 
-export function isLowStock(product: Product): boolean {
-  return product.stock <= 25;
+/** Suggestions de fin de fiche produit : même univers d'abord, puis les vedettes. */
+export function getRelated(product: Product, limit = 4): Product[] {
+  const others = products.filter((p) => p.handle !== product.handle);
+  const sameUniverse = others.filter((p) =>
+    p.collections.some((c) => product.collections.includes(c)),
+  );
+  return [...new Set([...sameUniverse, ...others])].slice(0, limit);
 }

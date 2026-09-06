@@ -31,7 +31,7 @@ export default function CgvPage() {
         {
           title: "3. Commande",
           body: [
-            "La boutique fonctionne sans panier : la commande porte sur le produit et la quantité sélectionnés au moment du clic sur « Acheter maintenant », auxquels peut s'ajouter un Doudou Mystère si l'option est cochée au paiement.",
+            "La commande porte sur les doudous présents dans le panier au moment du paiement, dans la limite de 10 doudous par commande. Le prix total est calculé automatiquement selon la quantité et s'affiche dans le panier avant validation. La livraison est offerte sur toutes les commandes.",
             "La commande est ferme une fois le paiement validé.",
           ],
         },

@@ -2,102 +2,77 @@
 
 /**
  * Récapitulatif de la commande qui vient d'être payée.
- * Les paramètres arrivent par l'URL et sont lus côté navigateur
- * (le site est exporté en HTML statique).
+ *
+ * Le panier est vidé au moment du paiement : on ne peut donc plus le relire
+ * ici. Le nombre d'articles et le montant transitent par l'URL, écrits par
+ * le checkout (le site est exporté en HTML statique, ces paramètres sont
+ * résolus côté navigateur).
  */
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import ProductVisual from "./ProductVisual";
-import { formatPrice, getProduct, mysteryProduct } from "@/lib/products";
-import { shippingFor } from "@/lib/checkout";
+import { formatPrice } from "@/lib/products";
 import { site } from "@/lib/site";
 
 export default function ConfirmationClient() {
   const params = useSearchParams();
-  const product = getProduct(params.get("p") ?? "");
-  const quantity = Math.min(10, Math.max(1, Number.parseInt(params.get("q") ?? "1", 10) || 1));
-  const withMystery = params.get("m") === "1" && product?.handle !== mysteryProduct.handle;
-
-  const items = product ? product.price * quantity + (withMystery ? mysteryProduct.price : 0) : 0;
-  const shipping = shippingFor(items);
+  const count = Math.max(0, Number.parseInt(params.get("n") ?? "0", 10) || 0);
+  const total = Math.max(0, Number.parseInt(params.get("t") ?? "0", 10) || 0);
 
   return (
     <>
-      {product && (
-        <div className="mx-auto h-36 w-36 animate-float">
-          <ProductVisual product={product} sizes="120px" className="h-full w-full" />
-        </div>
-      )}
+      <div className="mx-auto grid h-32 w-32 animate-float place-items-center rounded-full bg-gradient-to-br from-peach-100 to-bubble-100 text-6xl">
+        🧸
+      </div>
 
       <h1 className="mt-4 font-[family-name:var(--font-display)] text-4xl font-extrabold text-cocoa-800 sm:text-5xl">
         Merci ! 💕
       </h1>
       <p className="mt-3 text-base text-cocoa-600/85 sm:text-lg">
-        {product ? (
+        {count > 0 ? (
           <>
-            <strong className="text-cocoa-800">{product.name}</strong>
-            {quantity > 1 ? ` ×${quantity}` : ""} arrive bientôt chez toi.
+            Ton colis de <strong className="text-cocoa-800">{count} doudou{count > 1 ? "s" : ""}</strong>{" "}
+            est en préparation.
           </>
         ) : (
           "Ta commande est confirmée."
         )}
-        {withMystery && " Et ton Doudou Mystère est déjà en train d'être choisi 👀"}
       </p>
 
-      {product && (
+      {total > 0 && (
         <dl className="mx-auto mt-6 max-w-sm rounded-[var(--radius-cute)] bg-white p-5 text-left text-sm shadow-sm">
           <div className="flex justify-between py-1">
-            <dt className="text-cocoa-600/85">
-              {product.name} ×{quantity}
-            </dt>
-            <dd className="font-bold text-cocoa-800">{formatPrice(product.price * quantity)}</dd>
-          </div>
-          {withMystery && (
-            <div className="flex justify-between py-1">
-              <dt className="text-cocoa-600/85">Doudou Mystère 🎃</dt>
-              <dd className="font-bold text-cocoa-800">{formatPrice(mysteryProduct.price)}</dd>
-            </div>
-          )}
-          <div className="flex justify-between py-1">
             <dt className="text-cocoa-600/85">Livraison</dt>
-            <dd className="font-bold text-cocoa-800">
-              {shipping === 0 ? "Offerte" : formatPrice(shipping)}
-            </dd>
+            <dd className="font-extrabold text-bubble-500">Offerte 🚚</dd>
           </div>
-          <div className="mt-2 flex justify-between border-t border-cocoa-800/10 pt-2 font-[family-name:var(--font-display)] text-lg font-extrabold">
-            <dt className="text-cocoa-800">Total</dt>
-            <dd className="text-pumpkin-600">{formatPrice(items + shipping)}</dd>
+          <div className="mt-1 flex justify-between border-t border-cocoa-800/10 pt-2 font-[family-name:var(--font-display)] text-lg font-extrabold text-cocoa-800">
+            <dt>Total payé</dt>
+            <dd className="text-pumpkin-600">{formatPrice(total)}</dd>
           </div>
         </dl>
       )}
 
-      <p className="mt-5 text-sm text-cocoa-600/80">
-        📧 Un e-mail de confirmation part tout de suite. Tu recevras ton numéro de suivi dès
-        l&apos;expédition du colis.
-      </p>
-      <p className="mt-1 text-sm text-cocoa-600/70">
-        Une question ?{" "}
-        <a href={`mailto:${site.email}`} className="font-bold text-bubble-600 underline">
+      <p className="mt-6 text-sm text-cocoa-600/80">
+        Un e-mail de confirmation arrive dans quelques minutes, avec le numéro de
+        suivi dès l&apos;expédition. Une question ?{" "}
+        <a href={`mailto:${site.email}`} className="font-bold underline hover:text-bubble-600">
           {site.email}
         </a>
       </p>
 
-      <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+      <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
         <Link
           href="/doudous"
-          className="rounded-full bg-pumpkin-500 px-7 py-4 font-[family-name:var(--font-display)] text-sm font-extrabold uppercase tracking-wide text-white shadow-cute transition-transform hover:-translate-y-0.5"
+          className="rounded-full bg-pumpkin-500 px-7 py-4 font-[family-name:var(--font-display)] text-sm font-extrabold uppercase tracking-wide text-white shadow-cute transition-transform hover:-translate-y-0.5 active:scale-95"
         >
-          Continuer à craquer 🧸
+          Continuer mes achats
         </Link>
-        <a
-          href={site.tiktok}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="rounded-full bg-white px-7 py-4 font-[family-name:var(--font-display)] text-sm font-extrabold uppercase tracking-wide text-cocoa-800 ring-2 ring-cocoa-800/10 transition-transform hover:-translate-y-0.5"
+        <Link
+          href="/"
+          className="rounded-full bg-white px-7 py-4 font-[family-name:var(--font-display)] text-sm font-extrabold uppercase tracking-wide text-cocoa-800 ring-2 ring-cocoa-800/10 transition-transform hover:-translate-y-0.5 active:scale-95"
         >
-          Nous suivre sur TikTok
-        </a>
+          Retour à l&apos;accueil
+        </Link>
       </div>
     </>
   );

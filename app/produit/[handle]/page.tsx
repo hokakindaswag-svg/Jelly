@@ -6,11 +6,9 @@ import ProductPurchase from "@/components/ProductPurchase";
 import ProductGrid from "@/components/ProductGrid";
 import Badge from "@/components/ui/Badge";
 import PriceTag from "@/components/ui/PriceTag";
-import Stars from "@/components/ui/Stars";
 import SectionHeading from "@/components/ui/SectionHeading";
 import TrustBadges from "@/components/TrustBadges";
-import { allProducts, getProduct, isLowStock, products } from "@/lib/products";
-import { reviews } from "@/lib/site";
+import { allProducts, getProduct, getRelated } from "@/lib/products";
 
 type Params = { params: Promise<{ handle: string }> };
 
@@ -33,12 +31,7 @@ export default async function ProductPage({ params }: Params) {
   const product = getProduct(handle);
   if (!product) notFound();
 
-  const suggestions = products
-    .filter((p) => p.handle !== product.handle)
-    .filter((p) => p.collections.some((c) => product.collections.includes(c)))
-    .slice(0, 4);
-
-  const productReviews = reviews.filter((r) => r.product === product.name).slice(0, 2);
+  const suggestions = getRelated(product);
 
   return (
     <>
@@ -66,21 +59,16 @@ export default async function ProductPage({ params }: Params) {
             </h1>
             <p className="text-base text-cocoa-600/85">{product.tagline}</p>
 
-            <Stars rating={product.rating} count={product.reviewCount} />
-
-            <div className="flex items-baseline gap-3">
+            <div className="flex flex-wrap items-baseline gap-3">
               <PriceTag price={product.price} size="lg" />
-              <span className="text-sm font-bold text-cocoa-600/70">livraison en sus</span>
+              <span className="rounded-full bg-bubble-100 px-3 py-1 text-xs font-extrabold text-bubble-500">
+                🚚 Livraison offerte
+              </span>
             </div>
 
             {product.collections.includes("halloween") && (
               <p className="rounded-2xl bg-pumpkin-500/10 px-4 py-3 text-sm font-extrabold text-pumpkin-600">
                 🎃 Édition limitée Halloween — produite une seule fois.
-              </p>
-            )}
-            {isLowStock(product) && (
-              <p className="text-sm font-bold text-bubble-600">
-                👻 Plus que {product.stock} exemplaires. Adopte-le avant qu&apos;il ne soit trop tard.
               </p>
             )}
 
@@ -99,26 +87,14 @@ export default async function ProductPage({ params }: Params) {
                 </div>
               ))}
               <div className="pt-2 text-cocoa-600/85">
-                📦 Expédié depuis notre entrepôt européen sous 24 à 48 h ouvrées, avec suivi.
+                📦 Expédié depuis notre entrepôt européen, avec numéro de suivi.
+              </div>
+              <div className="pt-2 text-cocoa-600/85">🚚 Livraison offerte, sans minimum.</div>
+              <div className="pt-2 text-cocoa-600/85">
+                🔒 Paiement sécurisé — carte, Apple Pay, Google Pay.
               </div>
             </dl>
 
-            {productReviews.length > 0 && (
-              <div className="flex flex-col gap-3">
-                <h2 className="font-[family-name:var(--font-display)] text-lg font-extrabold text-cocoa-800">
-                  Avis vérifiés
-                </h2>
-                {productReviews.map((r) => (
-                  <figure key={r.handle} className="rounded-2xl bg-bubble-50 p-4">
-                    <Stars rating={r.rating} />
-                    <blockquote className="mt-1 text-sm text-cocoa-600/85">« {r.text} »</blockquote>
-                    <figcaption className="mt-1 text-xs font-bold text-cocoa-600/70">
-                      {r.name} · {r.handle}
-                    </figcaption>
-                  </figure>
-                ))}
-              </div>
-            )}
           </div>
         </div>
 
@@ -126,7 +102,7 @@ export default async function ProductPage({ params }: Params) {
           <section className="mt-16">
             <SectionHeading
               title={<>🧸 Il irait bien avec…</>}
-              subtitle="Tous à 9,99 €, évidemment."
+              subtitle="Tous les doudous sont à 9,99 €."
             />
             <div className="mt-6">
               <ProductGrid products={suggestions} />

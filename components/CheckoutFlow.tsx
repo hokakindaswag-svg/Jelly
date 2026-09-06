@@ -1,52 +1,37 @@
 "use client";
 
 /**
- * CheckoutFlow — paiement direct, sans panier.
+ * CheckoutFlow — paiement de la commande présente dans le panier.
  *
- * L'utilisateur arrive ici depuis un bouton « Acheter maintenant » avec un
- * produit et une quantité déjà déterminés. Il n'y a donc rien à « valider » :
- * coordonnées → livraison → paiement, et c'est fini.
- *
- * Le seul écart au produit choisi est l'upsell Doudou Mystère à 2 €, proposé
- * dans le récapitulatif. C'est une case à cocher qui modifie la commande en
- * cours, pas un panier.
+ * Le montant n'est jamais recalculé ici : il vient de `lib/pricing`, seule
+ * source de vérité pour les paliers. La livraison est offerte sur toutes les
+ * commandes, donc aucune ligne de frais à additionner.
  *
  * BRANCHEMENT PAIEMENT
  * --------------------
  * `submitOrder` est le point d'intégration : remplacer la simulation par
  *   - une redirection vers le checkout Shopify
- *     (`/cart/{variantId}:{qty}` ou `cart.checkoutUrl`), ou
+ *     (`cart.checkoutUrl`, construit depuis les lignes du panier), ou
  *   - la création d'un PaymentIntent Stripe côté serveur.
  * Aucun autre composant n'a besoin de changer.
  */
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import ProductVisual from "./ProductVisual";
-import { formatPrice, mysteryProduct, type Product } from "@/lib/products";
-import { shippingFor, FREE_SHIPPING_THRESHOLD } from "@/lib/checkout";
-
-type Props = {
-  product: Product;
-  quantity: number;
-  withMystery: boolean;
-};
+import { useCart } from "./CartProvider";
+import { MAX_DOUDOUS, TIERS, nextTierHint, tierFor } from "@/lib/pricing";
+import { formatPrice, mysteryProduct } from "@/lib/products";
 
 const STEPS = ["Coordonnées", "Livraison", "Paiement"] as const;
 
-export default function CheckoutFlow({ product, quantity, withMystery }: Props) {
+export default function CheckoutFlow() {
   const router = useRouter();
+  const { items, doudouCount, mysteryCount, doudousTotal, savings, total, ready, clear, setQuantity } =
+    useCart();
   const [step, setStep] = useState(0);
-  const [mystery, setMystery] = useState(withMystery);
   const [submitting, setSubmitting] = useState(false);
-
-  const isMysteryOrder = product.handle === mysteryProduct.handle;
-
-  const totals = useMemo(() => {
-    const items = product.price * quantity + (mystery && !isMysteryOrder ? mysteryProduct.price : 0);
-    const shipping = shippingFor(items);
-    return { items, shipping, total: items + shipping };
-  }, [product.price, quantity, mystery, isMysteryOrder]);
 
   function next(e: React.FormEvent) {
     e.preventDefault();
@@ -56,10 +41,37 @@ export default function CheckoutFlow({ product, quantity, withMystery }: Props) 
   function submitOrder(e: React.FormEvent) {
     e.preventDefault();
     setSubmitting(true);
-    const params = new URLSearchParams({ p: product.handle, q: String(quantity) });
-    if (mystery && !isMysteryOrder) params.set("m", "1");
-    router.push(`/checkout/confirmation?${params.toString()}`);
+    const count = doudouCount + mysteryCount;
+    clear();
+    router.push(`/checkout/confirmation?n=${count}&t=${total}`);
   }
+
+  // Tant que le panier n'est pas relu depuis le navigateur, on n'affiche rien
+  // plutôt qu'un « panier vide » qui disparaîtrait aussitôt.
+  if (!ready) return <div className="min-h-[40vh]" aria-hidden="true" />;
+
+  if (items.length === 0) {
+    return (
+      <div className="mx-auto max-w-md rounded-[var(--radius-cute)] bg-white p-8 text-center shadow-sm">
+        <p className="text-4xl" aria-hidden="true">🧺</p>
+        <h1 className="mt-2 font-[family-name:var(--font-display)] text-xl font-extrabold text-cocoa-800">
+          Ton panier est vide
+        </h1>
+        <p className="mt-1 text-sm text-cocoa-600/80">
+          Choisis un doudou et il apparaîtra ici. Tous à 9,99 €, livraison offerte.
+        </p>
+        <Link
+          href="/doudous"
+          className="mt-5 inline-flex rounded-full bg-pumpkin-500 px-6 py-3 font-[family-name:var(--font-display)] text-sm font-extrabold uppercase tracking-wide text-white shadow-cute"
+        >
+          Choisir un doudou
+        </Link>
+      </div>
+    );
+  }
+
+  const hint = nextTierHint(doudouCount);
+  const activeTier = tierFor(doudouCount);
 
   const field =
     "w-full rounded-2xl bg-white px-4 py-3 text-sm text-cocoa-800 outline-none ring-1 ring-cocoa-800/10 placeholder:text-cocoa-400 focus:ring-2 focus:ring-bubble-300";
@@ -202,7 +214,7 @@ export default function CheckoutFlow({ product, quantity, withMystery }: Props) 
                 disabled={submitting}
                 className="flex-1 rounded-full bg-pumpkin-500 px-6 py-4 font-[family-name:var(--font-display)] text-sm font-extrabold uppercase tracking-wide text-white shadow-cute transition-transform hover:-translate-y-0.5 active:scale-95 disabled:opacity-60"
               >
-                {submitting ? "Paiement en cours…" : `Payer ${formatPrice(totals.total)} 🧸`}
+                {submitting ? "Paiement en cours…" : `Payer ${formatPrice(total)} 🧸`}
               </button>
             </div>
           </form>
@@ -216,85 +228,109 @@ export default function CheckoutFlow({ product, quantity, withMystery }: Props) 
             Ta commande
           </h2>
 
-          <div className="mt-4 flex items-center gap-3">
-            <div className="h-16 w-16 shrink-0 rounded-2xl bg-gradient-to-br from-peach-50 to-bubble-50 p-1.5">
-              <ProductVisual product={product} label={null} sizes="80px" className="h-full w-full" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-extrabold text-cocoa-800">{product.name}</p>
-              <p className="text-xs text-cocoa-600/70">Quantité : {quantity}</p>
-            </div>
-            <span className="text-sm font-extrabold text-cocoa-800">
-              {formatPrice(product.price * quantity)}
-            </span>
-          </div>
+          <ul className="mt-4 divide-y divide-cocoa-800/5">
+            {items.map(({ product, quantity }) => (
+              <li key={product.handle} className="flex items-center gap-3 py-3">
+                <div className="h-16 w-16 shrink-0 rounded-2xl bg-gradient-to-br from-peach-50 to-bubble-50 p-1.5">
+                  <ProductVisual product={product} label={null} sizes="80px" className="h-full w-full" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-extrabold text-cocoa-800">{product.name}</p>
+                  <div className="mt-1 inline-flex items-center rounded-full bg-cream ring-1 ring-cocoa-800/10">
+                    <button
+                      type="button"
+                      onClick={() => setQuantity(product.handle, quantity - 1)}
+                      aria-label={`Retirer un ${product.name}`}
+                      className="grid h-7 w-7 place-items-center rounded-full text-base font-extrabold text-cocoa-800 hover:bg-white"
+                    >
+                      −
+                    </button>
+                    <span className="w-6 text-center text-xs font-extrabold text-cocoa-800">{quantity}</span>
+                    <button
+                      type="button"
+                      onClick={() => setQuantity(product.handle, quantity + 1)}
+                      aria-label={`Ajouter un ${product.name}`}
+                      className="grid h-7 w-7 place-items-center rounded-full text-base font-extrabold text-cocoa-800 hover:bg-white"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+                {product.handle === mysteryProduct.handle && (
+                  <span className="text-sm font-extrabold text-lilac-500">
+                    {formatPrice(product.price * quantity)}
+                  </span>
+                )}
+              </li>
+            ))}
+          </ul>
 
-          {mystery && !isMysteryOrder && (
-            <div className="mt-3 flex items-center gap-3 border-t border-cocoa-800/10 pt-3">
-              <div className="h-12 w-12 shrink-0 rounded-2xl bg-lilac-100 p-1.5 text-center text-xl leading-9">
-                🎁
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-extrabold text-cocoa-800">Doudou Mystère</p>
-                <p className="text-xs text-cocoa-600/70">Surprise Halloween</p>
-              </div>
-              <span className="text-sm font-extrabold text-cocoa-800">
-                {formatPrice(mysteryProduct.price)}
-              </span>
+          {doudouCount > 0 && (
+            <div className="mt-3 rounded-2xl bg-cream p-3">
+              <p className="text-center text-[11px] font-extrabold uppercase tracking-widest text-cocoa-600/70">
+                Ton palier
+              </p>
+              <ul className="mt-2 grid grid-cols-5 gap-1">
+                {TIERS.map((t) => {
+                  const on = activeTier?.min === t.min;
+                  return (
+                    <li
+                      key={t.min}
+                      className={`rounded-lg px-1 py-1.5 text-center text-[10px] font-extrabold ${
+                        on ? "bg-pumpkin-500 text-white" : "bg-white text-cocoa-800/60"
+                      }`}
+                    >
+                      <span className="block">{t.min === t.max ? t.min : `${t.min}–${t.max}`}</span>
+                      <span className="block font-bold">{formatPrice(t.total)}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+              {hint && doudouCount < MAX_DOUDOUS && (
+                <p className="mt-2 text-center text-xs font-bold text-pumpkin-600">
+                  🎃 Encore {hint.missing} doudou{hint.missing > 1 ? "s" : ""} → {formatPrice(hint.total)}
+                </p>
+              )}
             </div>
           )}
 
           <dl className="mt-4 space-y-1.5 border-t border-cocoa-800/10 pt-4 text-sm">
+            {doudouCount > 0 && (
+              <div className="flex justify-between text-cocoa-600/85">
+                <dt>
+                  {doudouCount} doudou{doudouCount > 1 ? "s" : ""}
+                </dt>
+                <dd>{formatPrice(doudousTotal)}</dd>
+              </div>
+            )}
+            {mysteryCount > 0 && (
+              <div className="flex justify-between text-cocoa-600/85">
+                <dt>{mysteryCount} Doudou Mystère</dt>
+                <dd>{formatPrice(mysteryCount * mysteryProduct.price)}</dd>
+              </div>
+            )}
+            {savings > 0 && (
+              <div className="flex justify-between font-bold text-bubble-500">
+                <dt>Économie</dt>
+                <dd>−{formatPrice(savings)}</dd>
+              </div>
+            )}
             <div className="flex justify-between text-cocoa-600/85">
-              <dt>Sous-total</dt>
-              <dd>{formatPrice(totals.items)}</dd>
-            </div>
-            <div className="flex justify-between text-cocoa-600/85">
-              <dt>Livraison suivie</dt>
-              <dd>{totals.shipping === 0 ? "Offerte 🎉" : formatPrice(totals.shipping)}</dd>
+              <dt>Livraison</dt>
+              <dd className="font-extrabold text-bubble-500">Offerte 🚚</dd>
             </div>
             <div className="flex justify-between pt-2 font-[family-name:var(--font-display)] text-lg font-extrabold text-cocoa-800">
               <dt>Total</dt>
-              <dd className="text-pumpkin-600">{formatPrice(totals.total)}</dd>
+              <dd className="text-pumpkin-600">{formatPrice(total)}</dd>
             </div>
           </dl>
 
-          {totals.shipping > 0 && (
-            <p className="mt-2 text-xs text-cocoa-600/70">
-              Livraison offerte dès {formatPrice(FREE_SHIPPING_THRESHOLD)} d&apos;achat.
-            </p>
-          )}
+          <ul className="mt-4 flex flex-col gap-1.5 border-t border-cocoa-800/10 pt-4 text-xs text-cocoa-600/75">
+            <li>🔒 Paiement chiffré</li>
+            <li>🚚 Livraison offerte, colis suivi</li>
+            <li>💕 Une question ? coucou@doudoumimi.fr</li>
+          </ul>
         </div>
-
-        {/* Upsell Doudou Mystère — modifie la commande en cours, sans panier */}
-        {!isMysteryOrder && (
-          <label
-            className={`mt-4 flex cursor-pointer items-start gap-3 rounded-[var(--radius-cute)] p-4 transition ${
-              mystery ? "bg-lilac-200 ring-2 ring-lilac-400" : "bg-lilac-100 hover:bg-lilac-200"
-            }`}
-          >
-            <input
-              type="checkbox"
-              checked={mystery}
-              onChange={(e) => setMystery(e.target.checked)}
-              className="mt-1 h-5 w-5 shrink-0 accent-[#9670f2]"
-            />
-            <span>
-              <span className="block font-[family-name:var(--font-display)] text-base font-extrabold text-cocoa-800">
-                🎃 Tu veux tenter le Doudou Mystère pour +2 € ?
-              </span>
-              <span className="mt-0.5 block text-xs text-cocoa-800/75">
-                On glisse un doudou surprise Halloween dans ton colis. Tu ne sais pas lequel. 👀
-              </span>
-            </span>
-          </label>
-        )}
-
-        <ul className="mt-4 space-y-1.5 px-1 text-xs text-cocoa-600/75">
-          <li>🔒 Paiement chiffré</li>
-          <li>📦 Expédition sous 24-48 h ouvrées, avec suivi</li>
-          <li>💌 Support : on répond sous 24 h</li>
-        </ul>
       </aside>
     </div>
   );

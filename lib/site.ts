@@ -3,8 +3,8 @@
  * avis et FAQ. Tout est centralisé ici pour qu'un futur portage Shopify
  * n'ait qu'à remplacer la source des données, pas les composants.
  *
- * Rappel produit : il n'existe aucun panier. Chaque CTA produit part
- * directement vers le checkout.
+ * Rappel produit : le prix unitaire (9,99 €) est le seul affiché en boutique.
+ * La grille dégressive par quantité ne se dévoile que dans le panier.
  */
 
 import type { CollectionHandle, PlushieArt } from "./products";
@@ -34,7 +34,7 @@ export const announcements = [
   "🧸 Tous les doudous : 9,99 €",
   "👻 Doudou Mystère : 2 € seulement",
   "💌 Expédition depuis l'Europe",
-  "🎀 Paiement 100 % sécurisé",
+  "🚚 Livraison offerte sur toute la boutique",
 ];
 
 export type Collection = {
@@ -112,81 +112,14 @@ export const trustBadges = [
     text: "Carte bancaire, Apple Pay et Google Pay via un paiement chiffré.",
   },
   {
-    emoji: "📦",
-    title: "Livraison suivie",
-    text: "Un numéro de suivi t'est envoyé par e-mail dès l'expédition.",
+    emoji: "🚚",
+    title: "Livraison offerte",
+    text: "Sur toutes les commandes, sans minimum d'achat. Colis suivi.",
   },
   {
     emoji: "💕",
     title: "Support client",
     text: `Une question ? Écris-nous à ${site.email}, on répond vite.`,
-  },
-];
-
-export type Review = {
-  name: string;
-  handle: string;
-  rating: number;
-  title: string;
-  text: string;
-  product: string;
-  emoji: string;
-};
-
-export const reviews: Review[] = [
-  {
-    name: "Léa",
-    handle: "@leaaa.png",
-    rating: 5,
-    title: "J'en ai pris 3 d'un coup",
-    text: "À 9,99 € j'ai pas réfléchi. Mimi le Fantôme est encore plus doux qu'en photo, il dort avec moi depuis.",
-    product: "Mimi le Fantôme",
-    emoji: "👻",
-  },
-  {
-    name: "Camille",
-    handle: "@cam.miille",
-    rating: 5,
-    title: "Le Doudou Mystère c'est trop bien",
-    text: "J'ai tenté à 2 € pour rigoler et j'ai reçu Sorcia. Franchement je l'aurais jamais choisie et c'est ma préférée.",
-    product: "Doudou Mystère",
-    emoji: "🎃",
-  },
-  {
-    name: "Inès",
-    handle: "@ines.rvr",
-    rating: 5,
-    title: "Cadeau parfait",
-    text: "Offert à ma petite sœur pour Halloween, elle a crié. Emballage trop mignon en plus.",
-    product: "Pompom la Citrouille",
-    emoji: "🧡",
-  },
-  {
-    name: "Manon",
-    handle: "@manonx3",
-    rating: 4,
-    title: "Trop mignon, arrivé vite",
-    text: "Batou est minuscule mais parfait sur mon sac. Je retire une étoile juste parce que je le voulais plus grand.",
-    product: "Batou la Chauve-Souris",
-    emoji: "🦇",
-  },
-  {
-    name: "Jade",
-    handle: "@jadeee.co",
-    rating: 5,
-    title: "Vue sur TikTok, achetée en 30 sec",
-    text: "Le site est trop simple, j'ai cliqué sur acheter et c'était réglé. Nuagette est ultra douce.",
-    product: "Nuagette",
-    emoji: "☁️",
-  },
-  {
-    name: "Sarah",
-    handle: "@sarahhh.b",
-    rating: 5,
-    title: "Attention c'est addictif",
-    text: "J'ai commencé par un doudou. J'en ai 5. Je ne compte pas m'arrêter là.",
-    product: "Guimauve le Lapin",
-    emoji: "🎀",
   },
 ];
 
@@ -204,16 +137,16 @@ export const faq = [
     a: "Non, sinon ce ne serait plus un mystère 👻 Si tu veux un modèle précis, prends-le directement à 9,99 €.",
   },
   {
-    q: "Où est mon panier ?",
-    a: "Il n'y en a pas, et c'est volontaire. Sur Doudoumimi tu cliques sur « Acheter maintenant » et tu arrives directement au paiement. Deux clics, c'est réglé.",
-  },
-  {
     q: "Je peux commander plusieurs doudous ?",
-    a: "Oui : sur la page produit, choisis la quantité avant de cliquer sur « Acheter maintenant ». Tu peux aussi ajouter un Doudou Mystère à 2 € au moment du paiement.",
+    a: "Oui, jusqu'à 10 doudous par commande. Ajoute-les à ton panier : plus tu en prends, plus le prix total devient intéressant. Le détail s'affiche directement dans le panier.",
   },
   {
-    q: "Combien de temps dure la livraison ?",
-    a: "Ton colis part de notre entrepôt européen sous 24 à 48 h ouvrées. Tu reçois un numéro de suivi par e-mail dès l'expédition.",
+    q: "La livraison est-elle payante ?",
+    a: "Non. La livraison est offerte sur toutes les commandes, sans minimum d'achat.",
+  },
+  {
+    q: "Comment se passe la livraison ?",
+    a: "Ton colis part de notre entrepôt européen et tu reçois un numéro de suivi par e-mail dès l'expédition.",
   },
   {
     q: "Les éditions limitées reviennent-elles en stock ?",

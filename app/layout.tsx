@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import AnnouncementBar from "@/components/AnnouncementBar";
+import CartDrawer from "@/components/CartDrawer";
+import { CartProvider } from "@/components/CartProvider";
 import Chrome from "@/components/Chrome";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -48,14 +50,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Aller au contenu
         </a>
-        <Chrome>
-          <AnnouncementBar />
-          <Header />
-        </Chrome>
-        <main id="contenu">{children}</main>
-        <Chrome>
-          <Footer />
-        </Chrome>
+        <CartProvider>
+          <Chrome>
+            <AnnouncementBar />
+            <Header />
+          </Chrome>
+          <main id="contenu">{children}</main>
+          <Chrome>
+            <Footer />
+          </Chrome>
+          <CartDrawer />
+        </CartProvider>
       </body>
     </html>
   );
