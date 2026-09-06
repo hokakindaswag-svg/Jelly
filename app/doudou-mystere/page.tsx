@@ -25,7 +25,7 @@ export default function MysteryPage() {
     <>
       <MysteryBox />
 
-      <section className="bg-white py-14 sm:py-20">
+      <section className="bg-cream-deep py-14 sm:py-20">
         <div className="mx-auto max-w-6xl px-4">
           <SectionHeading
             eyebrow="Comment ça marche"

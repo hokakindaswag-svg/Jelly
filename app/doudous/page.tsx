@@ -30,7 +30,7 @@ export default function DoudousPage() {
         </div>
       </section>
 
-      <section className="bg-white py-12 sm:py-16">
+      <section className="bg-cream-deep py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4">
           <SectionHeading title={<>✨ Explorer par univers</>} />
           <div className="mt-6 grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">

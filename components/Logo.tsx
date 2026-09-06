@@ -1,29 +1,50 @@
+import Image from "next/image";
 import Link from "next/link";
+import { assetUrl } from "@/lib/assets";
 
 /**
- * Logo Doudoumimi : mot-symbole rond + petit fantôme mascotte.
- * Pensé pour rester lisible en 24 px de haut sur mobile.
+ * Logo Doudoumimi.
+ *
+ * `full` affiche le logo complet (mascotte + mot-symbole) : réservé aux
+ * emplacements larges, footer et page de paiement. Par défaut on montre la
+ * mascotte seule accompagnée du nom en typo de marque, car le mot-symbole du
+ * fichier devient illisible à la hauteur d'un header mobile.
  */
-export default function Logo({ className = "" }: { className?: string }) {
+export default function Logo({
+  className = "",
+  full = false,
+}: {
+  className?: string;
+  full?: boolean;
+}) {
+  if (full) {
+    return (
+      <Link href="/" aria-label="Doudoumimi — accueil" className={`inline-block ${className}`}>
+        <Image
+          src={assetUrl("/brand/logo.webp")}
+          alt="Doudoumimi"
+          width={640}
+          height={353}
+          className="h-auto w-full max-w-[15rem]"
+        />
+      </Link>
+    );
+  }
+
   return (
     <Link
       href="/"
       aria-label="Doudoumimi — accueil"
       className={`group inline-flex items-center gap-2 ${className}`}
     >
-      <span className="relative grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gradient-to-br from-bubble-300 to-pumpkin-400 shadow-sm transition-transform duration-300 group-hover:-rotate-6">
-        <svg viewBox="0 0 40 40" className="h-7 w-7" aria-hidden="true">
-          <path
-            d="M20 7c-7 0-12 5-12 12v13c0 2 2 3 3.5 1.5l2-2c.8-.9 2.2-.9 3 0l1.7 2c.8.9 2.2.9 3 0l1.7-2c.8-.9 2.2-.9 3 0l2 2C29.5 35 32 34 32 32V19c0-7-5-12-12-12z"
-            fill="#fffdfb"
-          />
-          <circle cx="16" cy="19" r="1.9" fill="#33211a" />
-          <circle cx="24" cy="19" r="1.9" fill="#33211a" />
-          <ellipse cx="12.5" cy="23" rx="2.6" ry="1.8" fill="#ffa8c8" />
-          <ellipse cx="27.5" cy="23" rx="2.6" ry="1.8" fill="#ffa8c8" />
-          <path d="M18 24q2 2 4 0" stroke="#33211a" strokeWidth="1.3" strokeLinecap="round" fill="none" />
-        </svg>
-      </span>
+      <Image
+        src={assetUrl("/brand/mascotte.webp")}
+        alt=""
+        width={256}
+        height={221}
+        priority
+        className="h-10 w-auto shrink-0 transition-transform duration-300 group-hover:-rotate-6 sm:h-11"
+      />
       <span className="font-[family-name:var(--font-display)] text-xl font-extrabold tracking-tight text-cocoa-800 sm:text-2xl">
         Doudou<span className="text-bubble-500">mimi</span>
       </span>

@@ -12,7 +12,7 @@ export default function PriceSection() {
   const showcase = featuredProducts.slice(0, 5);
 
   return (
-    <section className="relative overflow-hidden bg-white py-14 sm:py-20">
+    <section className="relative overflow-hidden bg-cream-deep py-14 sm:py-20">
       <SectionDecor />
       <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 lg:grid-cols-[1.1fr_1fr]">
         <div className="text-center lg:text-left">

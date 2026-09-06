@@ -38,7 +38,7 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-12">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div className="flex flex-col gap-3">
-            <Logo />
+            <Logo full />
             <p className="max-w-xs text-sm text-cocoa-600/85">{site.tagline}</p>
             <p className="font-[family-name:var(--font-display)] text-lg font-extrabold text-pumpkin-600">
               {site.baseline}

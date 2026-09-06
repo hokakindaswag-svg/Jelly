@@ -1,14 +1,14 @@
 "use client";
 
 /**
- * Mini gamification du Doudou Mystère : les silhouettes des doudous possibles
- * sont floutées. Le bouton « tire au sort » fait défiler la sélection puis
- * s'arrête sur une silhouette — sans jamais révéler le modèle. L'objectif est
- * la curiosité, pas la promesse d'un produit précis.
+ * Mini gamification du Doudou Mystère : les vrais doudous de la collection
+ * Halloween apparaissent derrière les points d'interrogation, mais floutés.
+ * On devine des couleurs et des silhouettes reconnaissables sans jamais
+ * pouvoir identifier le modèle — c'est ce qui donne envie de tenter.
  */
 
 import { useEffect, useRef, useState } from "react";
-import Plushie from "./Plushie";
+import ProductVisual from "./ProductVisual";
 import type { Product } from "@/lib/products";
 
 export default function MysteryReveal({ candidates }: { candidates: Product[] }) {
@@ -54,10 +54,12 @@ export default function MysteryReveal({ candidates }: { candidates: Product[] })
               active === i ? "scale-110 ring-2 ring-lilac-400" : "opacity-80"
             }`}
           >
-            <Plushie
-              art={p.art}
-              palette={{ body: "#cbb4ff", accent: "#b191ff", blush: "#b191ff" }}
-              className="h-full w-full opacity-70 blur-[3px]"
+            <ProductVisual
+              product={p}
+              label={null}
+              sizes="120px"
+              className="h-full w-full"
+              imageClassName="blur-[7px] saturate-[1.15]"
             />
             <span className="absolute inset-0 grid place-items-center text-xl" aria-hidden="true">
               ❓
