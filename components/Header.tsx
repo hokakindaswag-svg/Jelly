@@ -3,8 +3,7 @@
 /**
  * Header Doudoumimi.
  *
- * À droite : recherche et compte uniquement. Il n'y a pas de panier sur ce
- * site, donc pas d'icône panier ni de compteur d'articles.
+ * À droite : recherche, compte et panier.
  */
 
 import Link from "next/link";
@@ -12,6 +11,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Logo from "./Logo";
 import { mainNav } from "@/lib/site";
+import CartButton from "./CartButton";
 
 export default function Header() {
   const pathname = usePathname();
@@ -99,6 +99,7 @@ export default function Header() {
               <path d="M4.5 20c1.2-4 4-6 7.5-6s6.3 2 7.5 6" />
             </svg>
           </Link>
+          <CartButton />
         </div>
       </div>
 

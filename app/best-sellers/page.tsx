@@ -2,19 +2,17 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ProductGrid from "@/components/ProductGrid";
 import SectionHeading from "@/components/ui/SectionHeading";
-import Reviews from "@/components/Reviews";
 import { getBadged, products } from "@/lib/products";
 
 export const metadata: Metadata = {
-  title: "Best-sellers — les plus adoptés",
-  description: "Les doudous Doudoumimi les plus adoptés. Tous à 9,99 €.",
+  title: "Nos coups de cœur",
+  description: "La sélection Doudoumimi. Tous les doudous à 9,99 €, livraison offerte.",
 };
 
 export default function BestSellersPage() {
   const best = getBadged("bestseller");
   const rest = products
     .filter((p) => !p.badges.includes("bestseller"))
-    .sort((a, b) => b.reviewCount - a.reviewCount)
     .slice(0, 8);
 
   return (
@@ -23,7 +21,7 @@ export default function BestSellersPage() {
         <div className="mx-auto max-w-7xl px-4">
           <SectionHeading
             eyebrow="Les chouchous"
-            title={<>💕 Les plus adoptés</>}
+            title={<>💕 Nos coups de cœur</>}
             subtitle="Ceux qui partent le plus vite. Rien d'étonnant à 9,99 €."
           />
         </div>
@@ -51,7 +49,6 @@ export default function BestSellersPage() {
         </div>
       </section>
 
-      <Reviews />
     </>
   );
 }

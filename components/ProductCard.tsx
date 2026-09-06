@@ -1,14 +1,15 @@
 import Link from "next/link";
 import ProductVisual from "./ProductVisual";
+import AddToCartButton from "./AddToCartButton";
 import Badge from "./ui/Badge";
 import PriceTag from "./ui/PriceTag";
-import Stars from "./ui/Stars";
-import BuyNowButton from "./BuyNowButton";
-import { isLowStock, type Product } from "@/lib/products";
+import type { Product } from "@/lib/products";
 
 /**
- * Carte produit Doudoumimi.
- * Image → nom → prix → bouton ACHETER MAINTENANT. Jamais d'ajout au panier.
+ * Carte produit.
+ *
+ * Photo → nom → 9,99 € → Ajouter au panier. Le prix affiché est toujours le
+ * prix unitaire : la grille par quantité ne se dévoile que dans le panier.
  */
 export default function ProductCard({
   product,
@@ -18,7 +19,6 @@ export default function ProductCard({
   priority?: boolean;
 }) {
   const href = `/produit/${product.handle}`;
-  const low = isLowStock(product);
 
   return (
     <article className="group flex flex-col overflow-hidden rounded-[var(--radius-cute)] bg-white shadow-[0_2px_14px_-8px_rgba(111,76,56,0.35)] ring-1 ring-cocoa-800/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-cute">
@@ -28,18 +28,14 @@ export default function ProductCard({
             product={product}
             priority={priority}
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 280px"
-            className="h-full w-full p-5 transition-transform duration-500 group-hover:scale-[1.07] group-hover:rotate-2"
+            className="h-full w-full p-4 transition-transform duration-500 group-hover:scale-[1.07] group-hover:rotate-2"
+            imageClassName="drop-shadow-[0_8px_14px_rgba(111,76,56,0.16)]"
           />
           <div className="absolute left-2.5 top-2.5 flex flex-col items-start gap-1.5">
             {product.badges.slice(0, 2).map((b) => (
               <Badge key={b} type={b} />
             ))}
           </div>
-          {low && (
-            <span className="absolute bottom-2.5 left-2.5 rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-extrabold text-pumpkin-600 backdrop-blur">
-              Plus que {product.stock} en stock
-            </span>
-          )}
         </div>
       </Link>
 
@@ -51,14 +47,13 @@ export default function ProductCard({
         </Link>
         <p className="line-clamp-2 text-xs text-cocoa-600/75 sm:text-[13px]">{product.tagline}</p>
 
-        <div className="mt-1 flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
+        <div className="mt-1">
           <PriceTag price={product.price} size="md" />
-          <Stars rating={product.rating} count={product.reviewCount} />
         </div>
 
-        <BuyNowButton handle={product.handle} size="sm" full className="mt-2">
-          Acheter maintenant
-        </BuyNowButton>
+        <AddToCartButton handle={product.handle} size="sm" full className="mt-2">
+          Ajouter au panier
+        </AddToCartButton>
       </div>
     </article>
   );

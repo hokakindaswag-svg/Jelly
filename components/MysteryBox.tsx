@@ -1,4 +1,4 @@
-import BuyNowButton from "./BuyNowButton";
+import AddToCartButton from "./AddToCartButton";
 import MysteryReveal from "./MysteryReveal";
 import ProductVisual from "./ProductVisual";
 import Sparkles from "./ui/Sparkles";
@@ -6,7 +6,7 @@ import { getByCollection, mysteryProduct } from "@/lib/products";
 
 /**
  * Section Doudou Mystère — la mécanique marketing centrale du site.
- * Achat direct à 2 €, sans passer par un panier.
+ * Il s'ajoute au panier comme un doudou normal, à 2 €.
  */
 export default function MysteryBox() {
   const candidates = getByCollection("halloween").slice(0, 6);
@@ -63,11 +63,11 @@ export default function MysteryBox() {
           </ul>
 
           <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row lg:items-start">
-            <BuyNowButton handle={mysteryProduct.handle} variant="mystery" size="lg">
+            <AddToCartButton handle={mysteryProduct.handle} variant="mystery" size="lg">
               Je tente ma chance 🎃
-            </BuyNowButton>
+            </AddToCartButton>
             <span className="text-sm font-semibold text-cocoa-800/70">
-              Paiement direct · aucun panier
+              Livraison offerte 🚚
             </span>
           </div>
         </div>

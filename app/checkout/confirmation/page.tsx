@@ -46,7 +46,7 @@ export default function ConfirmationPage() {
         <div className="mx-auto max-w-7xl px-4">
           <SectionHeading
             title={<>💕 Attention : risque élevé de vouloir tous les collectionner</>}
-            subtitle="Les plus adoptés du moment, toujours à 9,99 €."
+            subtitle="Nos coups de cœur, toujours à 9,99 €."
           />
           <div className="mt-8">
             <ProductGrid products={suggestions} />

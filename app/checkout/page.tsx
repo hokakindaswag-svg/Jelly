@@ -16,7 +16,7 @@ export default function CheckoutPage() {
         <div className="mb-8 flex flex-col items-center gap-2 text-center">
           <Logo />
           <p className="text-sm font-bold text-cocoa-600/75">
-            Achat direct · aucun panier, aucune étape en trop
+            Livraison offerte · paiement 100 % sécurisé
           </p>
         </div>
 

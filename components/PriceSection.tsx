@@ -1,16 +1,20 @@
 import Link from "next/link";
-import Plushie from "./Plushie";
-import { getProduct } from "@/lib/products";
+import ProductVisual from "./ProductVisual";
+import { SectionDecor } from "./ui/HalloweenDecor";
+import { featuredProducts } from "@/lib/products";
 
-const SHOWCASE = ["guimauve-le-lapin", "citrouillette", "nuagette", "etoilette", "kaki-la-grenouille"];
-
-/** Le prix unique est un pilier de la marque : il a sa propre section. */
+/**
+ * Le prix unique est un pilier de la marque : il a sa propre section.
+ * On y annonce le tarif à l'unité et la livraison offerte — jamais la grille
+ * par quantité, réservée au panier.
+ */
 export default function PriceSection() {
-  const showcase = SHOWCASE.map(getProduct).filter(Boolean);
+  const showcase = featuredProducts.slice(0, 5);
 
   return (
     <section className="relative overflow-hidden bg-white py-14 sm:py-20">
-      <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 lg:grid-cols-[1.1fr_1fr]">
+      <SectionDecor />
+      <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 lg:grid-cols-[1.1fr_1fr]">
         <div className="text-center lg:text-left">
           <span className="text-sm font-extrabold uppercase tracking-widest text-bubble-500">
             Prix unique
@@ -22,41 +26,38 @@ export default function PriceSection() {
             9,99 €
           </p>
           <p className="mx-auto mt-4 max-w-md text-base text-cocoa-600/85 sm:text-lg lg:mx-0">
-            Pas besoin de réfléchir pendant des heures. Tu choisis ton nouveau
-            doudou préféré pour seulement 9,99 €.
+            Un seul prix pour toute la boutique. Tu choisis avec le cœur, pas
+            avec une calculatrice.
           </p>
-          <Link
-            href="/doudous"
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-cocoa-800 px-7 py-4 font-[family-name:var(--font-display)] text-base font-extrabold uppercase tracking-wide text-white shadow-cute transition-transform hover:-translate-y-0.5 hover:bg-cocoa-600 active:scale-95"
-          >
-            Voir tous les doudous →
-          </Link>
-          <p className="mt-3 text-sm font-semibold text-cocoa-600/70">
-            Petits prix, gros câlins. 💕
+          <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-bubble-100 px-5 py-2.5 text-sm font-extrabold text-bubble-500">
+            🚚 Livraison offerte, sans minimum
           </p>
+          <div>
+            <Link
+              href="/doudous"
+              className="mt-6 inline-flex items-center gap-2 rounded-full bg-cocoa-800 px-7 py-4 font-[family-name:var(--font-display)] text-base font-extrabold uppercase tracking-wide text-white shadow-cute transition-transform hover:-translate-y-0.5 hover:bg-cocoa-600 active:scale-95"
+            >
+              Voir tous les doudous →
+            </Link>
+          </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-3 sm:gap-4">
+        <ul className="grid grid-cols-3 gap-3 sm:gap-4">
           {showcase.map((p, i) => (
-            <Link
-              key={p!.handle}
-              href={`/produit/${p!.handle}`}
-              className={`group relative aspect-square rounded-[var(--radius-cute)] bg-gradient-to-br from-peach-50 to-bubble-50 p-3 transition-transform hover:-translate-y-1 ${
-                i === 0 ? "col-span-2 row-span-2" : ""
-              }`}
-            >
-              <Plushie
-                art={p!.art}
-                palette={p!.palette}
-                label={p!.name}
-                className="h-full w-full transition-transform duration-500 group-hover:scale-110"
-              />
-              <span className="absolute bottom-2 right-2 rounded-full bg-white px-2 py-0.5 text-[10px] font-extrabold text-pumpkin-600 shadow-sm sm:text-xs">
-                9,99 €
-              </span>
-            </Link>
+            <li key={p.handle} className={i === 0 ? "col-span-2 row-span-2" : undefined}>
+              <Link
+                href={`/produit/${p.handle}`}
+                className="group block overflow-hidden rounded-[var(--radius-cute)] bg-gradient-to-br from-peach-50 to-bubble-50 p-2 ring-1 ring-cocoa-800/5 transition-transform duration-300 hover:-translate-y-1"
+              >
+                <ProductVisual
+                  product={p}
+                  sizes="(max-width: 640px) 33vw, 220px"
+                  className="aspect-square w-full transition-transform duration-500 group-hover:scale-105"
+                />
+              </Link>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );
